@@ -34,10 +34,7 @@ pub fn check(content: &str, max_grade: Option<f64>, file: &Path) -> Result<()> {
             process::exit(1);
         }
         Some(max) => {
-            println!(
-                "PASS: {} scores {grade:.1} (max: {max:.0})",
-                file.display()
-            );
+            println!("PASS: {} scores {grade:.1} (max: {max:.0})", file.display());
         }
         None => {
             println!("{grade:.1}");
@@ -92,7 +89,10 @@ fn strip_markdown(text: &str) -> String {
         }
 
         // Skip blockquotes marker but keep text
-        let line = line.trim_start().strip_prefix('>').map_or(line, |rest| rest.trim_start());
+        let line = line
+            .trim_start()
+            .strip_prefix('>')
+            .map_or(line, |rest| rest.trim_start());
 
         // Remove inline code
         let line = remove_pattern(line, '`', '`');
@@ -177,9 +177,7 @@ fn count_words(text: &str) -> usize {
 }
 
 fn count_syllables(text: &str) -> usize {
-    text.split_whitespace()
-        .map(count_word_syllables)
-        .sum()
+    text.split_whitespace().map(count_word_syllables).sum()
 }
 
 /// Estimate syllable count for a single word.

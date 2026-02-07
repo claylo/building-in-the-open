@@ -10,7 +10,10 @@ mod readability;
 mod tokens;
 
 #[derive(Parser)]
-#[command(name = "bito-lint", about = "Quality gate tooling for building-in-the-open artifacts")]
+#[command(
+    name = "bito-lint",
+    about = "Quality gate tooling for building-in-the-open artifacts"
+)]
 struct Cli {
     #[command(subcommand)]
     command: Command,
@@ -59,10 +62,7 @@ fn main() -> Result<()> {
                 .with_context(|| format!("Failed to read {}", file.display()))?;
             tokens::check(&content, budget, &file)
         }
-        Command::Readability {
-            file,
-            max_grade,
-        } => {
+        Command::Readability { file, max_grade } => {
             let content = std::fs::read_to_string(&file)
                 .with_context(|| format!("Failed to read {}", file.display()))?;
             readability::check(&content, max_grade, &file)
