@@ -34,7 +34,7 @@ Three layers, loosely coupled:
 Install the quality gate CLI:
 
 ```sh
-cargo install --path crates/bito-lint
+cargo install bito-lint
 ```
 
 Check a handoff document's token count:
@@ -114,7 +114,6 @@ The rule: if you wouldn't say it at a technical deep-dive conference, it doesn't
 .claude-plugin/     Plugin metadata
 .handoffs/          Public handoff documents (committed)
 agents/             Agent templates (editorial reviewer)
-crates/bito-lint/   Quality gate CLI
 docs/decisions/     Architecture decision records
 docs/designs/       Design documents
 hooks/              Pre-commit hook

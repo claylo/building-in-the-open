@@ -205,7 +205,7 @@ The quality gate layer uses **real tools for measurement and agents for judgment
 
 ### Token Counter
 
-**Implementation:** `bito-lint tokens` subcommand (`crates/bito-lint/`), using tiktoken `cl100k_base` encoding.
+**Implementation:** `bito-lint tokens` subcommand, using tiktoken `cl100k_base` encoding.
 
 **Trigger:** Pre-commit on `.handoffs/` files.
 
@@ -213,7 +213,7 @@ The quality gate layer uses **real tools for measurement and agents for judgment
 
 ### Readability Scorer
 
-**Implementation:** `bito-lint readability` subcommand (`crates/bito-lint/`), computing Flesch-Kincaid grade level.
+**Implementation:** `bito-lint readability` subcommand, computing Flesch-Kincaid grade level.
 
 **Trigger:** Pre-commit on `docs/` files.
 
@@ -230,7 +230,7 @@ Phase 3 calibration against real artifacts confirmed these targets.
 
 ### Section Completeness Checker
 
-**Implementation:** `bito-lint completeness` subcommand (`crates/bito-lint/`). Pattern matcher — no agent needed.
+**Implementation:** `bito-lint completeness` subcommand. Pattern matcher — no agent needed.
 
 **Trigger:** Pre-commit on all doc artifacts.
 

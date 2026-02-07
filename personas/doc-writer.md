@@ -38,7 +38,7 @@ Developers who want to use this project. They're evaluating it, learning it, or 
 > Install `bito-lint`:
 >
 > ```sh
-> cargo install --path crates/bito-lint
+> cargo install bito-lint
 > ```
 >
 > Check a handoff document's token count:

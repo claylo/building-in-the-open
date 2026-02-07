@@ -142,7 +142,7 @@ Do not auto-fix agent review issues. The reviewer identifies problems and sugges
 
 - **Called by:** Every other writing skill as its final step (`curating-context`, `writing-adrs`, `writing-design-docs`, `writing-end-user-docs`, `writing-changelogs`)
 - **Also triggered by:** Pre-commit hook (`hooks/pre-commit-docs`) for manually-written or externally-modified docs
-- **Depends on:** `bito-lint` CLI (`crates/bito-lint/`) for deterministic checks, `agents/editorial-reviewer.md` for agent-based review
+- **Depends on:** `bito-lint` CLI (`cargo install bito-lint`) for deterministic checks, `agents/editorial-reviewer.md` for agent-based review
 - **Enforces:** ADR-0002 (tone firewall on commit path), ADR-0003 (real tools for measurement, agents for judgment), ADR-0005 (token budget for handoffs)
 
 ## Common Mistakes
