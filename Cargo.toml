@@ -1,0 +1,46 @@
+[workspace]
+members = ["crates/*"]
+default-members = ["crates/*"]
+resolver = "2"
+
+[workspace.package]
+edition = "2024"
+license = "Apache-2.0 OR MIT"
+version = "0.1.0"
+rust-version = "1.88.0"
+readme = "README.md"
+repository = "https://github.com/claylo/building-in-the-open"
+homepage = "https://github.com/claylo/building-in-the-open"
+description = "Quality gate tooling for building-in-the-open artifacts"
+keywords = []
+categories = []
+
+[workspace.lints.rust]
+unsafe_code = "deny"
+missing_docs = "warn"
+
+[workspace.lints.clippy]
+all = "warn"
+nursery = "warn"
+
+[profile.dev.package."*"]
+debug = 0
+opt-level = 1
+
+[profile.dev.build-override]
+debug = 0
+opt-level = 1
+
+[profile.dev]
+debug = "line-tables-only"
+opt-level = 1
+split-debuginfo = "packed"
+codegen-units = 256
+
+[profile.test]
+inherits = "dev"
+codegen-units = 256
+debug = true
+
+[profile.release]
+debug = "line-tables-only"

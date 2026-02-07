@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+# Pre-commit hook for building-in-the-open artifact quality gates.
+# Install: cp hooks/pre-commit-docs .git/hooks/pre-commit
+# Or add to your existing pre-commit hook.
+#
+# Requires: bito-lint binary (cargo install --path tools/bito-lint)
+
+set -euo pipefail
+
+BITO_LINT="${BITO_LINT:-bito-lint}"
+
+# Check if bito-lint is available
+if ! command -v "$BITO_LINT" &>/dev/null; then
+    echo "Warning: bito-lint not found. Skipping doc quality checks."
+    echo "Install with: cargo install --path tools/bito-lint"
+    exit 0
+fi
+
+FAILED=0
+
+# Check staged handoff files: token budget + completeness
+for file in $(git diff --cached --name-only --diff-filter=ACM | grep '\.handoffs/.*\.md$'); do
+    "$BITO_LINT" tokens "$file" --budget 2000 || FAILED=1
+    "$BITO_LINT" completeness "$file" --template handoff || FAILED=1
+done
+
+# Check staged ADR files: completeness
+for file in $(git diff --cached --name-only --diff-filter=ACM | grep 'docs/decisions/.*\.md$'); do
+    "$BITO_LINT" completeness "$file" --template adr || FAILED=1
+done
+
+# Check staged design doc files: completeness + readability
+for file in $(git diff --cached --name-only --diff-filter=ACM | grep 'docs/designs/.*\.md$'); do
+    "$BITO_LINT" completeness "$file" --template design-doc || FAILED=1
+    "$BITO_LINT" readability "$file" --max-grade 12 || FAILED=1
+done
+
+if [ "$FAILED" -ne 0 ]; then
+    echo ""
+    echo "Doc quality checks failed. Fix the issues above before committing."
+    exit 1
+fi
