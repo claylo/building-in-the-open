@@ -10,5 +10,8 @@ PRIVATE_MEMORY.md
 *.swo
 *~
 
+# Claude Code local config
+.claude/
+
 # Rust build artifacts (Phase 3 tooling)
 target/
