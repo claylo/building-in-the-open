@@ -42,26 +42,28 @@ Operates in two modes:
 
 ## Calibration Examples
 
+*These examples are drawn from real artifacts in this project.*
+
 ### Example 1: Public handoff — where things stand
 
 **Wrong:**
-> We've been working on the configuration system for a while now and have made good progress. There were some challenges along the way but we've addressed most of them. The system is in pretty good shape overall, though there's still some work to do on a few things.
+> We've been working on the plugin for a while now and have made good progress. There were some challenges along the way but we've addressed most of them. The system is in pretty good shape overall, though there's still some work to do on a few things.
 
 **Right:**
-> Config parsing is complete and tested. YAML loading, environment variable overrides, and CLI flag precedence all work. The validation layer is stubbed — it accepts all input without checking types or ranges. Branch: `feat/config`, all tests green.
+> Phases 0-4 are complete. The plugin has all structural pieces in place: 6 skills in `skills/*/SKILL.md`, 4 personas in `personas/`, 3 templates, 6 ADRs with index at `docs/decisions/README.md`, and `bito-lint` CLI with token counting, readability scoring, completeness checking. All tests pass (7/7), all quality gates pass (`just lint-docs`).
 
 ### Example 2: Public handoff — landmines
 
 **Wrong:**
-> There might be some issues with the error handling in certain edge cases that could potentially cause problems if not addressed.
+> There might be some issues with the token counting and some configuration that could potentially cause problems if not addressed.
 
 **Right:**
-> `parse_config()` at `src/config.rs:47` silently returns `Default::default()` on malformed YAML instead of erroring. This masks bad config files. The fix is straightforward (return `Result` instead of unwrapping to default) but touches 14 call sites. Don't ship without fixing this.
+> `bito-lint` token counting uses `cl100k_base`, not Claude's tokenizer — counts are approximate. See `tokens.rs:8-10`. Also: `curating-context` skill claims `/handoff` invocation name via its frontmatter (`name: handoff`). This intentionally shadows the superpowers `handoff` skill. Collision if both plugins are active.
 
 ### Example 3: Private vs. public — same information, different modes
 
 **Private (PRIVATE_MEMORY.md):**
-> Took this project on because libfoo's maintainer has mass-ignored every PR that adds proper error handling. Three of my downstream projects depend on this behavior and I'm tired of monkeypatching around it. The actual fix is ~200 lines but the political situation means forking is the only realistic path.
+> The last session burned 52% of capacity without producing a handoff. Got really frustrated — handoff documents are the whole point of this plugin and the agent overwrote the existing one instead of creating a new one. Had to revert with git checkout. Need to make the "handoffs are point-in-time snapshots, never overwrite" rule more prominent.
 
 **Public (.handoffs/):**
-> This project provides an alternative implementation of libfoo's error handling pipeline. Motivation: our downstream projects need granular error types that aren't available in the upstream API. Rather than maintain patches against upstream, we implement the subset we need directly.
+> No handoff was written after the last session. The previous handoff (`2026-02-07-initial-plugin-implementation.md`) is from before Phase 4 items 1-2 were completed. This handoff corrects the record.

@@ -1,7 +1,7 @@
 # Building in the Open: Plugin Design
 
 **Date:** 2026-02-07
-**Status:** Design Complete, Awaiting Implementation
+**Status:** Implemented through Phase 4; Phase 5 calibration in progress
 
 ## Overview
 
@@ -205,7 +205,7 @@ The quality gate layer uses **real tools for measurement and agents for judgment
 
 ### Token Counter
 
-**Implementation:** Hook wrapping `tiktoken-rs` or equivalent.
+**Implementation:** `bito-lint tokens` subcommand (`crates/bito-lint/`), using tiktoken `cl100k_base` encoding.
 
 **Trigger:** Pre-commit on `.handoffs/` files.
 
@@ -213,7 +213,7 @@ The quality gate layer uses **real tools for measurement and agents for judgment
 
 ### Readability Scorer
 
-**Implementation:** CLI readability tool computing Flesch-Kincaid grade level.
+**Implementation:** `bito-lint readability` subcommand (`crates/bito-lint/`), computing Flesch-Kincaid grade level.
 
 **Trigger:** Pre-commit on `docs/` files.
 
@@ -226,11 +226,11 @@ The quality gate layer uses **real tools for measurement and agents for judgment
 | Marketing Copywriter | ≤ 8 | Scannable, punchy |
 | Context Curator (public) | No grade — density metric | Optimizes for tokens-to-insight ratio |
 
-These are initial targets. Phase 3 calibrates them against real artifacts produced in Phases 0-2.
+Phase 3 calibration against real artifacts confirmed these targets.
 
 ### Section Completeness Checker
 
-**Implementation:** Pattern matcher (no agent needed).
+**Implementation:** `bito-lint completeness` subcommand (`crates/bito-lint/`). Pattern matcher — no agent needed.
 
 **Trigger:** Pre-commit on all doc artifacts.
 

@@ -62,7 +62,7 @@ Both files are committed, but private memory lives in a protected branch or encr
 - Good, because private memory is backed up and synced via git
 - Bad, because access controls add complexity (branch permissions, encryption keys)
 - Bad, because a misconfigured access control could expose private content
-- Bad, because "building in the open" means the repo is likely public — access controls on individual files within a public repo are awkward at best
+- Bad, because "building in the open" means the repo is likely public — git does not support per-file access controls within a single branch, so the mechanism would require encryption or separate repos
 
 ### Both gitignored, committed manually
 

@@ -26,6 +26,8 @@ Someone who hasn't committed yet. They're deciding whether to star, clone, or cl
 
 ## Calibration Examples
 
+*These examples use real features from this project.*
+
 ### Example 1: README introduction
 
 **Wrong:**

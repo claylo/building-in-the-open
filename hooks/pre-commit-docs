@@ -3,7 +3,7 @@
 # Install: cp hooks/pre-commit-docs .git/hooks/pre-commit
 # Or add to your existing pre-commit hook.
 #
-# Requires: bito-lint binary (cargo install --path tools/bito-lint)
+# Requires: bito-lint binary (cargo install --path crates/bito-lint)
 
 set -euo pipefail
 
@@ -12,7 +12,7 @@ BITO_LINT="${BITO_LINT:-bito-lint}"
 # Check if bito-lint is available
 if ! command -v "$BITO_LINT" &>/dev/null; then
     echo "Warning: bito-lint not found. Skipping doc quality checks."
-    echo "Install with: cargo install --path tools/bito-lint"
+    echo "Install with: cargo install --path crates/bito-lint"
     exit 0
 fi
 

@@ -34,7 +34,7 @@ Chosen option: "Hard budget of 2,000 tokens, enforced by tooling," because a con
 
 - Good, because a hard target forces authors to compress ruthlessly — every sentence must earn its place
 - Good, because tooling enforcement provides exact counts, not estimates
-- Good, because 2,000 tokens is roughly one screen of dense text — scannable in under two minutes
+- Good, because 2,000 tokens fits on a single screen of dense text — scannable in under two minutes
 - Good, because optimizing for agent context windows also improves human readability
 - Bad, because complex projects may struggle to fit critical context into 2,000 tokens
 - Bad, because the budget may need adjustment once we have real data (addressed: Phase 3 calibrates against actual artifacts)

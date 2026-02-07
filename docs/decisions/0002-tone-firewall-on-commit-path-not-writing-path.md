@@ -10,7 +10,7 @@ informed: []
 
 ## Context and Problem Statement
 
-Agents need to draft freely — exploring ideas, capturing raw context, sometimes venting — without worrying about public appearance. But everything committed to the repository must be professional and pass the "conference-talk test." Where in the workflow should we apply the tone filter?
+Agents need to draft freely — exploring ideas, capturing raw context, recording unfiltered observations — without worrying about public appearance. But everything committed to the repository must be professional and pass the "conference-talk test." Where in the workflow should we apply the tone filter?
 
 ## Decision Drivers
 

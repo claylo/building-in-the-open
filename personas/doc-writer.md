@@ -27,6 +27,8 @@ Developers who want to use this project. They're evaluating it, learning it, or 
 
 ## Calibration Examples
 
+*These examples use real features from this project.*
+
 ### Example 1: Getting started
 
 **Wrong:**

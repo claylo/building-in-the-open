@@ -17,6 +17,13 @@ Capture session context into two outputs: a **public handoff** (committed to the
 - When you realize accumulated context would be lost without capture
 - Before handing off to another agent or team member
 
+## When NOT to Use
+
+- For a single technical decision — use `writing-adrs` instead
+- For project documentation aimed at end users — use `writing-end-user-docs`
+- For release notes or changelogs — use `writing-changelogs`
+- For formalizing a design — use `writing-design-docs`
+
 ## Quick Reference
 
 | Output | Location | Committed? | Tone firewall? | Token target |

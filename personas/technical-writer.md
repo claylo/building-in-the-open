@@ -27,26 +27,31 @@ Future developers, contributors, and AI agents consuming architectural context. 
 
 ## Calibration Examples
 
-### Example 1: Explaining a technical decision
+*These examples are drawn from real artifacts in this project.*
+
+### Example 1: Explaining a technical decision (from ADR-0003)
 
 **Wrong:**
-> It was decided that SQLite would be used for data storage. This decision was made after considering various options and evaluating the trade-offs of each approach. The team felt that SQLite offered certain advantages that made it a suitable choice for the project's requirements.
+> It was decided to use a hybrid approach combining tools and agents for quality gates. This decision was made after considering the trade-offs of various approaches, including fully automated and fully manual options.
 
 **Right:**
-> We chose SQLite over Postgres because this is a single-user CLI tool and eliminating a server dependency cuts the onboarding surface in half. The trade-off: we lose concurrent write access and row-level locking. For a tool that processes one command at a time, that cost is zero.
+> Chosen option: "Hybrid," because each approach does what it's good at. Token counts and readability scores are math — tools get exact answers. Tone detection and contextual subtlety are judgment — agents handle nuance that pattern matching can't reach.
 
-### Example 2: Documenting a constraint
+### Example 2: Stating consequences honestly (from ADR-0005)
 
 **Wrong:**
-> It should be noted that there are some limitations with regard to the current approach. The system may not handle all edge cases perfectly, and further investigation might be warranted to explore potential improvements in this area.
+> This approach has some limitations that may need to be addressed in the future. The budget might not work for all cases, and further calibration could potentially improve the system.
 
 **Right:**
-> This approach breaks if the input contains nested YAML anchors — the parser silently drops them. We accept this limitation because anchor usage in our config files is explicitly discouraged (see ADR-0012). If that changes, swap `serde_yml` for `saphyr`, which handles anchors correctly at the cost of a heavier dependency.
+> - Good, because a hard target forces authors to compress ruthlessly — every sentence must earn its place
+> - Good, because 2,000 tokens is roughly one screen of dense text — scannable in under two minutes
+> - Bad, because complex projects may struggle to fit critical context into 2,000 tokens
+> - Bad, because the budget may need adjustment once we have real data (addressed: Phase 3 calibrates against actual artifacts)
 
-### Example 3: Framing a future consideration
+### Example 3: Framing the problem (from ADR-0006)
 
 **Wrong:**
-> Going forward, we might want to consider the possibility of potentially adding support for additional output formats, as this could perhaps be beneficial for some users in certain situations.
+> There are different types of context that need to be stored in different ways. Some context is private and some is public. A decision needs to be made about how to handle the visibility of these different types of content in the repository.
 
 **Right:**
-> We support Markdown output only. Adding HTML and PDF is straightforward (the templates are already format-agnostic) but isn't worth the testing surface until we have a concrete user request. Revisit when that happens.
+> Context curation produces two types of output: unfiltered private context (motivations, frustrations, hunches) and professional public handoffs (state, decisions, next steps). Both are valuable, but they serve different audiences with different trust boundaries. "Building in the open" means handoffs are part of the public record of how the project evolved.

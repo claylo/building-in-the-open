@@ -39,7 +39,7 @@ Chosen option: "Prompted extraction," because it balances completeness with sign
 
 ### Confirmation
 
-Validated in Phase 2 when the `writing-design-docs` skill processes this plugin's design document. If it correctly identifies the six design decisions listed in the Design Decisions section and prompts for ADR creation, the prompted model works. If it misses obvious decisions or flags non-decisions, the recognition logic needs tuning.
+Validated in Phase 2 when the `writing-design-docs` skill processes this plugin's design document. If it correctly identifies the design decisions listed in the Design Decisions section and prompts for ADR creation, the prompted model works. If it misses obvious decisions or flags non-decisions, the recognition logic needs tuning.
 
 ## Pros and Cons of the Options
 
