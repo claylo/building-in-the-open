@@ -2,7 +2,7 @@
 
 **Persona:** Context Curator (public mode)
 
-**Location:** `.handoffs/YYYY-MM-DD-<short-kebab-topic>.md`
+**Location:** `.handoffs/YYYY-MM-DD-HHMMSS-<short-kebab-topic>.md`
 
 **Token budget:** Target under 2,000 tokens. Enforced by tooling when available, self-enforced until then.
 

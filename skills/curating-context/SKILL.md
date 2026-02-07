@@ -21,7 +21,7 @@ Capture session context into two outputs: a **public handoff** (committed to the
 
 | Output | Location | Committed? | Tone firewall? | Token target |
 |--------|----------|-----------|----------------|-------------|
-| Public handoff | `.handoffs/YYYY-MM-DD-<topic>.md` | Yes | Yes | < 2,000 |
+| Public handoff | `.handoffs/YYYY-MM-DD-HHMMSS-<topic>.md` | Yes | Yes | < 2,000 |
 | Private memory | `PRIVATE_MEMORY.md` (project root) | No (gitignored) | No | No limit |
 
 ## Process

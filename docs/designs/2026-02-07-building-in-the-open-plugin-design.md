@@ -135,7 +135,7 @@ Six artifact-specific skills, organized by when they fire in a project's lifecyc
 
 **Produces:**
 - `PRIVATE_MEMORY.md` — gitignored, unfiltered
-- `.handoffs/YYYY-MM-DD-<topic>.md` — committed, tone-firewalled, token-budgeted
+- `.handoffs/YYYY-MM-DD-HHMMSS-<topic>.md` — committed, tone-firewalled, token-budgeted
 
 **Behavior:** Asks "what happened this session that the next agent needs?" and "what happened that only future-me needs?" Writes both outputs. The public handoff gets a completeness check (could a stranger start from this alone?) and a token budget check (target: under 2,000 tokens, enforced by tooling).
 
