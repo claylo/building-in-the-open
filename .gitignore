@@ -1,0 +1,14 @@
+# Private context — never committed
+PRIVATE_MEMORY.md
+**/PRIVATE_MEMORY.md
+
+# OS
+.DS_Store
+
+# Editor
+*.swp
+*.swo
+*~
+
+# Rust build artifacts (Phase 3 tooling)
+target/

@@ -1,0 +1,13 @@
+{
+  "name": "building-in-the-open",
+  "description": "Personas, skills, and quality gates for producing professional, self-contained development artifacts — from internal handoffs to end-user documentation",
+  "version": "0.1.0",
+  "author": {
+    "name": "Clay Loveless",
+    "email": "clay@loveless.net"
+  },
+  "homepage": "https://github.com/claylo/building-in-the-open",
+  "repository": "https://github.com/claylo/building-in-the-open",
+  "license": "MIT",
+  "keywords": ["documentation", "personas", "adrs", "handoffs", "editorial", "tone-firewall", "building-in-the-open"]
+}
