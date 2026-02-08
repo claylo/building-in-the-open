@@ -49,6 +49,8 @@ For each change, note:
 
 Load the **Technical Writer** persona from `personas/technical-writer.md`.
 
+**Dialect:** Check for `BITO_LINT_DIALECT` environment variable or the project's bito-lint config for a dialect preference (en-us, en-gb, en-ca, en-au). If set, use that dialect's spelling conventions consistently throughout both the changelog entry and the release announcement. If not set, default to en-US.
+
 Follow [Keep a Changelog](https://keepachangelog.com/) conventions:
 
 ```markdown

@@ -46,6 +46,8 @@ State the decision as a problem and a chosen solution. If you can't articulate t
 
 Load the **Technical Writer** persona from `personas/technical-writer.md` and the ADR template from `templates/adr.md`.
 
+**Dialect:** Check for `BITO_LINT_DIALECT` environment variable or the project's bito-lint config for a dialect preference (en-us, en-gb, en-ca, en-au). If set, use that dialect's spelling conventions consistently throughout the draft. If not set, default to en-US.
+
 ### Step 3: Determine the ADR number
 
 Check `docs/decisions/` for the highest existing number. Increment by one. Zero-pad to four digits.

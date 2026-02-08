@@ -43,6 +43,8 @@ Determine:
 
 ### Step 2: Run deterministic checks
 
+**Dialect:** Check for `BITO_LINT_DIALECT` environment variable or the project's bito-lint config for a dialect preference (en-us, en-gb, en-ca, en-au). If set, pass `--dialect <value>` to `bito-lint analyze` to enforce dialect-consistent spelling. The consistency checker will flag wrong-dialect spellings in addition to mixed usage.
+
 Run the applicable `bito-lint` checks. Not all checks apply to all artifact types.
 
 | Artifact type | Token check | Readability check | Completeness check |

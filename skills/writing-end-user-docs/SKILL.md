@@ -45,7 +45,11 @@ Bad framing: "The tokens subcommand of bito-lint."
 
 ### Step 2: Load the persona
 
-Load the **Doc Writer** persona from `personas/doc-writer.md`. Key reminders:
+Load the **Doc Writer** persona from `personas/doc-writer.md`.
+
+**Dialect:** Check for `BITO_LINT_DIALECT` environment variable or the project's bito-lint config for a dialect preference (en-us, en-gb, en-ca, en-au). If set, use that dialect's spelling conventions consistently throughout the draft. If not set, default to en-US.
+
+Key reminders:
 
 - Example first, explanation second
 - No "simply," "just," or "obviously"
