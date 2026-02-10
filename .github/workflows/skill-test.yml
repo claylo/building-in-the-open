@@ -1,0 +1,80 @@
+name: Skill Tests
+
+on:
+  workflow_dispatch:
+    inputs:
+      runs_per_scenario:
+        description: "Runs per scenario (1=smoke, 5=calibration)"
+        required: true
+        default: "1"
+        type: choice
+        options:
+          - "1"
+          - "3"
+          - "5"
+      model:
+        description: "Claude model to use"
+        required: true
+        default: "haiku"
+        type: choice
+        options:
+          - "haiku"
+          - "sonnet"
+      scenario_filter:
+        description: "Filter scenarios by name (e.g., 'adr', 'handoff'). Empty = all."
+        required: false
+        default: ""
+        type: string
+      editorial:
+        description: "Run editorial review (doubles cost)"
+        required: false
+        default: false
+        type: boolean
+
+jobs:
+  skill-test:
+    name: Run skill tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install bito-lint
+        run: cargo install bito-lint
+        env:
+          CARGO_TERM_COLOR: always
+
+      - name: Install Claude Code
+        run: npm install -g @anthropic/claude-code
+
+      - name: Run test suite
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          ARGS="--runs=${{ inputs.runs_per_scenario }} --model=${{ inputs.model }}"
+          if [[ -n "${{ inputs.scenario_filter }}" ]]; then
+            ARGS="$ARGS --scenario=${{ inputs.scenario_filter }}"
+          fi
+          if [[ "${{ inputs.editorial }}" == "true" ]]; then
+            ARGS="$ARGS --editorial"
+          fi
+          bash test/run-suite.sh $ARGS
+
+      - name: Upload scorecards
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: skill-test-scorecards-${{ github.run_number }}
+          path: test/scorecards/
+          retention-days: 30
+
+      - name: Post summary
+        if: always()
+        run: |
+          LATEST_MD=$(ls -t test/scorecards/suite-*.md 2>/dev/null | head -1)
+          if [[ -n "$LATEST_MD" ]]; then
+            echo "## Skill Test Results" >> $GITHUB_STEP_SUMMARY
+            cat "$LATEST_MD" >> $GITHUB_STEP_SUMMARY
+          fi

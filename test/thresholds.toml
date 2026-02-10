@@ -1,0 +1,22 @@
+# Quality thresholds per skill/artifact type.
+# Used by run-skill-test.sh to validate generated artifacts.
+
+[handoff]
+completeness_template = "handoff"
+token_budget = 2000
+
+[adr]
+completeness_template = "adr"
+readability_max_grade = 12.0
+
+[design-doc]
+completeness_template = "design-doc"
+readability_max_grade = 12.0
+
+[end-user-doc]
+readability_max_grade = 8.0
+# No completeness template — structure varies by doc type
+
+[changelog]
+# Too short for meaningful readability scoring.
+# Structural check only (verify file was created).

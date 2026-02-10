@@ -29,27 +29,21 @@ Three layers, loosely coupled:
 
 **Skills** define *what* to produce. **Personas** define *how* to sound. **Tooling** enforces *whether it's good enough to ship*.
 
-## Quick start
+## Installation
 
-Install the quality gate CLI:
+See the [installation guide](docs/installation.md) for complete setup instructions, including:
+- Plugin installation (clone into `~/.claude/plugins/`)
+- bito-lint quality gate CLI (`cargo install bito-lint`)
+- Pre-commit hook setup
+- MCP server configuration (optional)
+- Dialect and threshold configuration
 
-```sh
-cargo install bito-lint
-```
+## Quickstart
 
-Check a handoff document's token count:
-
-```sh
-bito-lint tokens .handoffs/2026-02-07-my-handoff.md --budget 2000
-```
-
-If the handoff is under 2,000 tokens, you'll see `PASS`. If not, you'll get the exact count and a nudge to compress.
-
-Run all quality checks at once:
-
-```sh
-just lint-docs
-```
+See the [quickstart walkthrough](docs/quickstart.md) for hands-on examples:
+- **Your first handoff** — capture session context with quality gates
+- **Your first ADR** — document an architectural decision
+- **The editorial review pipeline** — the full draft-review-commit loop
 
 ## Skills
 

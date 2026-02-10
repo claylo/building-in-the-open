@@ -1,72 +1,60 @@
 set shell := ["bash", "-c"]
 set dotenv-load := true
-toolchain := `taplo get -f rust-toolchain.toml toolchain.channel | tr -d '"'`
-msrv := "1.88.0"
+
+# bito-lint binary — override with BITO_LINT env var if needed
+bito_lint := env("BITO_LINT", "bito-lint")
 
 default:
   @just --list
 
-fmt:
-  cargo fmt --all
+# Run all doc quality checks
+lint-docs: lint-handoffs lint-adrs lint-design-docs
 
-clippy:
-  cargo +{{toolchain}} clippy --all-targets --all-features --message-format=short -- -D warnings
+# Run a single file through all applicable checks
+lint file:
+  #!/usr/bin/env bash
+  set -euo pipefail
+  f="{{file}}"
+  if [[ "$f" == .handoffs/*.md ]]; then
+    {{bito_lint}} tokens "$f" --budget 2000
+    {{bito_lint}} completeness "$f" --template handoff
+  elif [[ "$f" == docs/decisions/*.md ]]; then
+    {{bito_lint}} completeness "$f" --template adr
+  elif [[ "$f" == docs/designs/*.md ]]; then
+    {{bito_lint}} readability "$f" --max-grade 12
+    {{bito_lint}} completeness "$f" --template design-doc
+  else
+    echo "Unknown artifact type for: $f"
+    echo "Running general analysis..."
+    {{bito_lint}} analyze "$f"
+  fi
 
-fix:
-  echo "Using toolchain {{toolchain}}"
-  cargo +{{toolchain}} clippy --fix --allow-dirty --allow-staged -- -W clippy::all
-
-# Check dependencies for security advisories and license compliance
-deny:
-  cargo deny check
-
-test:
-  cargo nextest run
-
-doc-test:
-  cargo test --doc
-
-cov:
-  @cargo llvm-cov clean --workspace
-  cargo llvm-cov nextest --no-report
-  @cargo llvm-cov report --html
-  @cargo llvm-cov report --summary-only --json --output-path target/llvm-cov/summary.json
-
-check: fmt clippy test
-
-# Build release binary
-build-release:
-  cargo build -p bito-lint --release
-
-# Run bito-lint token counter against all handoff files
+# Check token budget and completeness for all handoff files
 lint-handoffs:
   #!/usr/bin/env bash
   set -euo pipefail
   for f in .handoffs/*.md; do
     [ -f "$f" ] || continue
-    cargo run -p bito-lint -- tokens "$f" --budget 2000
-    cargo run -p bito-lint -- completeness "$f" --template handoff
+    {{bito_lint}} tokens "$f" --budget 2000
+    {{bito_lint}} completeness "$f" --template handoff
   done
 
-# Run bito-lint completeness check against all ADRs
+# Check completeness for all ADRs
 lint-adrs:
   #!/usr/bin/env bash
   set -euo pipefail
   for f in docs/decisions/*.md; do
     [ -f "$f" ] || continue
     [[ "$(basename "$f")" == "README.md" ]] && continue
-    cargo run -p bito-lint -- completeness "$f" --template adr
+    {{bito_lint}} completeness "$f" --template adr
   done
 
-# Run bito-lint readability check against all design docs
+# Check readability and completeness for all design docs
 lint-design-docs:
   #!/usr/bin/env bash
   set -euo pipefail
   for f in docs/designs/*.md; do
     [ -f "$f" ] || continue
-    cargo run -p bito-lint -- readability "$f" --max-grade 12
-    cargo run -p bito-lint -- completeness "$f" --template design-doc
+    {{bito_lint}} readability "$f" --max-grade 12
+    {{bito_lint}} completeness "$f" --template design-doc
   done
-
-# Run all doc quality checks
-lint-docs: lint-handoffs lint-adrs lint-design-docs

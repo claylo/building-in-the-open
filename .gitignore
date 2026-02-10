@@ -12,3 +12,6 @@ PRIVATE_MEMORY.md
 
 # Claude Code local config
 .claude/
+
+# Skill test output (generated, not committed)
+test/scorecards/
