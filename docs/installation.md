@@ -5,6 +5,10 @@
 - [Claude Code](https://docs.anthropic.com/en/docs/claude-code) CLI installed and configured
 - [bito-lint](https://github.com/claylo/bito-lint) for quality gate checks:
   ```sh
+  # with cargo-binstall (fast downloads, pre-built binary)
+  cargo binstall bito-lint
+  
+  # Or build from source
   cargo install bito-lint
   ```
   Or via Homebrew: `brew install claylo/brew/bito-lint`
