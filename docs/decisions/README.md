@@ -14,6 +14,7 @@ ADRs document significant decisions that shape the plugin's architecture and con
 | ✅ | [ADR-0004: Prompted ADR extraction from design docs](0004-prompted-adr-extraction-from-design-docs.md) | 2026-02-07 |
 | ✅ | [ADR-0005: Token budget for public handoffs](0005-token-budget-for-public-handoffs.md) | 2026-02-07 |
 | ✅ | [ADR-0006: Private memory is gitignored; handoffs are committed](0006-private-memory-gitignored-handoffs-committed.md) | 2026-02-07 |
+| ✅ | [ADR-0007: Use pluggable tokenizer backends in bito-lint](0007-use-pluggable-tokenizer-backends-in-bito-lint.md) | 2026-02-10 |
 
 ## Status Legend
 
