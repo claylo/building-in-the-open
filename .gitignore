@@ -15,3 +15,5 @@ PRIVATE_MEMORY.md
 
 # Skill test output (generated, not committed)
 test/scorecards/
+
+tools/token-compare/target/
