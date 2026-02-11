@@ -16,7 +16,6 @@
 #   test/scorecards/suite-<timestamp>.md      Human-readable summary
 #
 # Environment:
-#   ANTHROPIC_API_KEY  — required
 #   BITO_LINT          — path to bito-lint binary (default: bito-lint)
 
 set -euo pipefail
@@ -188,9 +187,13 @@ if [[ -n "$ALL_SCORECARDS" ]]; then
       echo "### $SID" >> "$SUITE_MD"
       echo "" >> "$SUITE_MD"
 
-      # Pass rate
+      # Pass rate — only evaluate checks that have a "pass" field
       PASS_COUNT=$(echo "$SCENARIO_CARDS" | while read -r f; do
-        jq -r '[.checks[].pass // true] | all | if . then "1" else "0" end' "$f"
+        jq -r '
+          if .artifact_created == false then "0"
+          elif [.checks | to_entries[] | select(.value | has("pass")) | .value.pass] | length == 0 then "1"
+          else [.checks | to_entries[] | select(.value | has("pass")) | .value.pass] | all | if . then "1" else "0" end
+          end' "$f"
       done | awk '{s+=$1} END {print s}')
       echo "- **Pass rate:** ${PASS_COUNT}/${RUNS}" >> "$SUITE_MD"
 

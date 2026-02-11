@@ -7,7 +7,6 @@
 # runs bito-lint quality checks on the output, and writes a JSON scorecard.
 #
 # Environment:
-#   ANTHROPIC_API_KEY  — required
 #   BITO_LINT          — path to bito-lint binary (default: bito-lint)
 #   PLUGIN_DIR         — path to the plugin (default: repo root)
 
@@ -86,7 +85,8 @@ THRESHOLDS_FILE="$SCRIPT_DIR/thresholds.toml"
 get_threshold() {
   local section="$1" key="$2"
   # Simple TOML parser — works for flat key = value within [section]
-  sed -n "/^\[$section\]/,/^\[/p" "$THRESHOLDS_FILE" | grep "^$key " | sed 's/.*= *//' | tr -d '"'
+  # grep || true to avoid pipefail exit when key is not defined
+  sed -n "/^\[$section\]/,/^\[/p" "$THRESHOLDS_FILE" | { grep "^$key " || true; } | sed 's/.*= *//' | tr -d '"'
 }
 
 COMPLETENESS_TEMPLATE=$(get_threshold "$EXPECTED_TYPE" "completeness_template")
@@ -193,24 +193,23 @@ if [[ "$ARTIFACT_FOUND" == "true" && -n "$ARTIFACT_PATH" ]]; then
   # Completeness check
   if [[ -n "$COMPLETENESS_TEMPLATE" ]]; then
     echo "Checking completeness (template: $COMPLETENESS_TEMPLATE)..."
-    if COMP_OUTPUT=$("$BITO_LINT" completeness "$ARTIFACT_PATH" --template "$COMPLETENESS_TEMPLATE" --json 2>&1); then
-      COMP_PASS=true
-    else
-      COMP_PASS=false
-    fi
-    CHECKS=$(echo "$CHECKS" | jq --arg pass "$COMP_PASS" \
-      '. + {completeness: {pass: ($pass == "true")}}')
+    COMP_OUTPUT=$("$BITO_LINT" completeness "$ARTIFACT_PATH" --template "$COMPLETENESS_TEMPLATE" --json 2>&1) || true
+    COMP_PASS=$(echo "$COMP_OUTPUT" | jq -r '.pass // false')
+    COMP_SECTIONS=$(echo "$COMP_OUTPUT" | jq -c '[.sections[] | select(.status == "missing") | .name] // []' 2>/dev/null || echo "[]")
+    CHECKS=$(echo "$CHECKS" | jq --arg pass "$COMP_PASS" --argjson missing "$COMP_SECTIONS" \
+      '. + {completeness: {pass: ($pass == "true"), missing_sections: $missing}}')
   fi
 
   # Readability check
   if [[ -n "$READABILITY_MAX" ]]; then
     echo "Checking readability (max grade: $READABILITY_MAX)..."
-    if READ_OUTPUT=$("$BITO_LINT" readability "$ARTIFACT_PATH" --max-grade "$READABILITY_MAX" --json 2>&1); then
+    READ_OUTPUT=$("$BITO_LINT" readability "$ARTIFACT_PATH" --max-grade "$READABILITY_MAX" --json 2>&1) || true
+    READ_GRADE=$(echo "$READ_OUTPUT" | jq -r '.grade // 0' 2>/dev/null || echo "0")
+    OVER_MAX=$(echo "$READ_OUTPUT" | jq -r '.over_max // false' 2>/dev/null || echo "true")
+    if [[ "$OVER_MAX" == "false" ]]; then
       READ_PASS=true
-      READ_GRADE=$(echo "$READ_OUTPUT" | jq -r '.grade // 0' 2>/dev/null || echo "0")
     else
       READ_PASS=false
-      READ_GRADE=$(echo "$READ_OUTPUT" | jq -r '.grade // 0' 2>/dev/null || echo "0")
     fi
     CHECKS=$(echo "$CHECKS" | jq --arg pass "$READ_PASS" --arg grade "$READ_GRADE" --arg max "$READABILITY_MAX" \
       '. + {readability: {pass: ($pass == "true"), grade: ($grade | tonumber), max: ($max | tonumber)}}')
@@ -219,12 +218,13 @@ if [[ "$ARTIFACT_FOUND" == "true" && -n "$ARTIFACT_PATH" ]]; then
   # Token budget check
   if [[ -n "$TOKEN_BUDGET" ]]; then
     echo "Checking token budget ($TOKEN_BUDGET)..."
-    if TOK_OUTPUT=$("$BITO_LINT" tokens "$ARTIFACT_PATH" --budget "$TOKEN_BUDGET" --json 2>&1); then
+    TOK_OUTPUT=$("$BITO_LINT" tokens "$ARTIFACT_PATH" --budget "$TOKEN_BUDGET" --json 2>&1) || true
+    TOK_COUNT=$(echo "$TOK_OUTPUT" | jq -r '.count // 0' 2>/dev/null || echo "0")
+    OVER_BUDGET=$(echo "$TOK_OUTPUT" | jq -r '.over_budget // false' 2>/dev/null || echo "true")
+    if [[ "$OVER_BUDGET" == "false" ]]; then
       TOK_PASS=true
-      TOK_COUNT=$(echo "$TOK_OUTPUT" | jq -r '.count // .tokens // 0' 2>/dev/null || echo "0")
     else
       TOK_PASS=false
-      TOK_COUNT=$(echo "$TOK_OUTPUT" | jq -r '.count // .tokens // 0' 2>/dev/null || echo "0")
     fi
     CHECKS=$(echo "$CHECKS" | jq --arg pass "$TOK_PASS" --arg count "$TOK_COUNT" --arg budget "$TOKEN_BUDGET" \
       '. + {tokens: {pass: ($pass == "true"), count: ($count | tonumber), budget: ($budget | tonumber)}}')
@@ -335,4 +335,17 @@ Complete the full editorial review workflow. Report PASS or FAIL with issue coun
     "$SCORECARD_FILE" > "${SCORECARD_FILE}.tmp" && mv "${SCORECARD_FILE}.tmp" "$SCORECARD_FILE"
 
   echo "Editorial review: $EDITORIAL_RESULT"
+fi
+
+# --- Determine overall pass/fail -----------------------------------------------
+
+# Pass = artifact created AND all defined checks passed
+ALL_CHECKS_PASS=$(jq -r '
+  if .artifact_created == false then "false"
+  elif (.checks | length) == 0 then "true"
+  else [.checks | to_entries[] | select(.value | has("pass")) | .value.pass] | all | tostring
+  end' "$SCORECARD_FILE")
+
+if [[ "$ALL_CHECKS_PASS" != "true" ]]; then
+  exit 1
 fi
