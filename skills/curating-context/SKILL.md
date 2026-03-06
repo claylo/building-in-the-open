@@ -1,9 +1,11 @@
 ---
-name: handoff
+name: curating-context
 description: Use when ending a work session, switching focus areas, reaching a decision point, or when context needs to be preserved for the next agent or human. Produces both a public handoff document and private memory capture.
 ---
 
 # Curating Context
+
+**Announce at start:** "I'm using the curating-context skill with the Context Curator persona to capture session context."
 
 ## Overview
 
@@ -19,7 +21,7 @@ Capture session context into two outputs: a **public handoff** (committed to the
 
 ## When NOT to Use
 
-- For a single technical decision — use `writing-adrs` instead
+- For a single technical decision — use `capturing-decisions` instead
 - For project documentation aimed at end users — use `writing-end-user-docs`
 - For release notes or changelogs — use `writing-changelogs`
 - For formalizing a design — use `writing-design-docs`
@@ -90,9 +92,9 @@ Specifically check for:
 ## Integration
 
 - **Replaces and enhances** the standalone `handoff` skill
-- **Pairs with** `writing-adrs` — if decisions were made this session, capture them as ADRs and reference them from the handoff
+- **Pairs with** `capturing-decisions` — if decisions were made this session, capture them as ADRs and reference them from the handoff
 - **Feeds into** the next session's onboarding — the handoff is the first thing the next agent reads
-- **Used by** `finishing-a-development-branch` as the final context capture before merge
+- **Used by** branch completion workflows as the final context capture before merge
 
 ## Common Mistakes
 

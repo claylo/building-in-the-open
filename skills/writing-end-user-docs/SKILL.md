@@ -5,6 +5,8 @@ description: Use when a feature is stable enough to document for end users, when
 
 # Writing End-User Docs
 
+**Announce at start:** "I'm using the writing-end-user-docs skill with the Doc Writer persona."
+
 ## Overview
 
 Produce documentation that makes someone want to keep reading. End-user docs answer "how do I...?" — not "what does this module do?" They start from the user's goal, not the codebase's structure. This skill uses the Doc Writer persona to produce tutorials, guides, API references, and getting-started content.
@@ -21,7 +23,7 @@ Produce documentation that makes someone want to keep reading. End-user docs ans
 
 - For internal architectural documentation — use `writing-design-docs`
 - For capturing session context — use `curating-context`
-- For recording decisions — use `writing-adrs`
+- For recording decisions — use `capturing-decisions`
 - For README introductions or release announcements — use `writing-changelogs` (Marketing Copywriter persona)
 
 ## Quick Reference
@@ -111,9 +113,9 @@ Run through `editorial-review` if available. The Doc Writer voice should be cons
 
 ## Integration
 
-- **Upstream:** `writing-design-docs` provides the architectural context that informs what to document. `brainstorming` may identify user-facing features that need docs.
+- **Upstream:** `writing-design-docs` provides the architectural context that informs what to document. Brainstorming sessions may identify user-facing features that need docs.
 - **Downstream:** `editorial-review` validates the finished document. `writing-changelogs` (release announcements) may link to these docs.
-- **Triggered by:** `finishing-a-development-branch` — new features landing should produce or update end-user docs.
+- **Triggered by:** New features landing on main — should produce or update end-user docs.
 - **Complementary to:** README sections use the Marketing Copywriter persona to *attract* users; end-user docs use the Doc Writer persona to *onboard* them. They link to each other but have different jobs.
 
 ## Common Mistakes

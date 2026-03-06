@@ -5,6 +5,8 @@ description: Use before committing any documentation artifact to the repository.
 
 # Editorial Review
 
+**Announce at start:** "I'm using the editorial-review skill to run quality gates on this artifact."
+
 ## Overview
 
 The final gate before an artifact reaches the repository. This skill coordinates two layers of quality checking: **deterministic tools** for things agents are bad at (counting tokens, computing readability scores, validating section completeness) and **agent-based review** for things tools can't catch (sarcasm, assumed context, tone drift, the conference-talk test).
@@ -142,7 +144,7 @@ Do not auto-fix agent review issues. The reviewer identifies problems and sugges
 
 ## Integration
 
-- **Called by:** Every other writing skill as its final step (`curating-context`, `writing-adrs`, `writing-design-docs`, `writing-end-user-docs`, `writing-changelogs`)
+- **Called by:** Every other writing skill as its final step (`curating-context`, `capturing-decisions`, `writing-design-docs`, `writing-end-user-docs`, `writing-changelogs`)
 - **Also triggered by:** Pre-commit hook (`hooks/pre-commit-docs`) for manually-written or externally-modified docs
 - **Depends on:** `bito-lint` CLI (`cargo install bito-lint`) for deterministic checks, `agents/editorial-reviewer.md` for agent-based review
 - **Enforces:** ADR-0002 (tone firewall on commit path), ADR-0003 (real tools for measurement, agents for judgment), ADR-0005 (token budget for handoffs)

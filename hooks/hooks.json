@@ -1,0 +1,39 @@
+{
+  "description": "building-in-the-open plugin hooks",
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "matcher": "/handoff",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo 'The building-in-the-open plugin has a curating-context skill for writing handoff documents. Use the Skill tool to invoke it: skill: \"curating-context\"'"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/check-bito-lint.sh",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/check-docs-on-write.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

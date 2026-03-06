@@ -3,15 +3,12 @@
 ## Prerequisites
 
 - [Claude Code](https://docs.anthropic.com/en/docs/claude-code) CLI installed and configured
-- [bito-lint](https://github.com/claylo/bito-lint) for quality gate checks:
+- [bito-lint](https://github.com/claylo/bito-lint) for quality gate checks (install via any of):
   ```sh
-  # with cargo-binstall (fast downloads, pre-built binary)
-  cargo binstall bito-lint
-  
-  # Or build from source
-  cargo install bito-lint
+  cargo binstall bito-lint          # pre-built binary, fastest
+  brew install claylo/brew/bito-lint # macOS / Linux
+  npm install -g @claylo/bito-lint   # wraps the native binary
   ```
-  Or via Homebrew: `brew install claylo/brew/bito-lint`
 
 ## Install the plugin
 
@@ -25,7 +22,11 @@ Claude Code discovers plugins automatically from `~/.claude/plugins/`. No additi
 
 ## Verify
 
-Start a new Claude Code session and confirm the plugin loaded by checking that the skills are available. The plugin provides six skills: `curating-context`, `writing-adrs`, `writing-design-docs`, `writing-end-user-docs`, `writing-changelogs`, and `editorial-review`.
+Start a new Claude Code session and confirm the plugin loaded by checking that the skills are available. The plugin provides eight skills: `building-in-the-open` (routing and setup), `onboarding` (guided config interview), `curating-context`, `capturing-decisions`, `writing-design-docs`, `writing-end-user-docs`, `writing-changelogs`, and `editorial-review`.
+
+## Configure quality gates
+
+The fastest way to configure quality gates is to run the `onboarding` skill — it interviews you about your writing standards and generates a `.bito-lint.yaml` config. Alternatively, configure manually as described below.
 
 ## Pre-commit hook
 
@@ -62,30 +63,38 @@ For AI-driven quality checks during writing sessions, configure bito-lint's MCP 
 
 This lets the editorial-review skill call quality gate tools directly during agent-based reviews. Claude Code's MCP Tool Search handles context management automatically — tool schemas are loaded on demand when total MCP context exceeds 10% of the window.
 
-## Configuration
+## Manual configuration
 
 ### Dialect
 
 Set your preferred English dialect for spelling enforcement:
 
-```sh
-# Environment variable (per-session)
-export BITO_LINT_DIALECT=en-us
-
-# Or in your project's bito-lint config (.bito-lint.toml)
-dialect = "en-us"
+```yaml
+# .bito-lint.yaml
+dialect: en-us  # en-us | en-gb | en-ca | en-au
 ```
 
-Supported dialects: `en-us`, `en-gb`, `en-ca`, `en-au`. When set, all skills check for dialect-consistent spelling in generated artifacts.
+Or via environment variable: `export BITO_LINT_DIALECT=en-us`
 
-### Quality thresholds
+When set, all skills check for dialect-consistent spelling in generated artifacts.
 
-Override default quality thresholds in your project's bito-lint config:
+### Quality thresholds and rules
 
-```toml
-# .bito-lint.toml
-token_budget = 2000
-max_grade = 12.0
+```yaml
+# .bito-lint.yaml
+max_grade: 12.0
+passive_max_percent: 15.0
+tokenizer: claude
+
+rules:
+  - paths: [".handoffs/*.md"]
+    checks:
+      tokens: { budget: 2000 }
+      completeness: { template: handoff }
+
+  - paths: ["docs/decisions/*.md"]
+    checks:
+      completeness: { template: adr }
 ```
 
 See the [bito-lint documentation](https://github.com/claylo/bito-lint) for all configuration options.

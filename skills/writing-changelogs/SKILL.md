@@ -5,6 +5,8 @@ description: Use at release time or incrementally as features land, when writing
 
 # Writing Changelogs
 
+**Announce at start:** "I'm using the writing-changelogs skill — Technical Writer for the changelog, Marketing Copywriter for the release announcement."
+
 ## Overview
 
 Same changes, two audiences. Existing users upgrading need a scannable changelog that tells them what broke, what's new, and what to do about it. Potential users discovering the project need a release announcement that shows why these changes matter. This skill produces both from the same set of changes, using different personas for each.
@@ -14,13 +16,13 @@ Same changes, two audiences. Existing users upgrading need a scannable changelog
 - At release time — before tagging a version
 - Incrementally, as significant features land on main
 - When preparing release announcements for social posts, blog entries, or GitHub Releases
-- When `finishing-a-development-branch` identifies user-facing changes
+- When completing a development branch with user-facing changes
 
 ## When NOT to Use
 
 - For internal architectural changes with no user-visible impact — these belong in design docs or ADRs, not changelogs
 - For session context — use `curating-context`
-- For capturing the decision behind a change — use `writing-adrs`
+- For capturing the decision behind a change — use `capturing-decisions`
 
 ## Quick Reference
 
@@ -129,7 +131,7 @@ Run both outputs through `editorial-review` if available. Watch for:
 
 ## Integration
 
-- **Upstream:** `finishing-a-development-branch` identifies changes to document. ADRs and design docs provide rationale context.
+- **Upstream:** Branch completion workflows identify changes to document. ADRs and design docs provide rationale context.
 - **Downstream:** Release announcements may link to `writing-end-user-docs` for new features. The changelog becomes a reference for future `curating-context` handoffs.
 - **Paired with:** `writing-end-user-docs` — if a feature is significant enough for a changelog entry, it may also need updated user docs.
 - **Triggered by:** Version tagging, PR merge to main with user-visible changes, or explicit invocation at release time.
