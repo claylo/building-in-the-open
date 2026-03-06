@@ -40,7 +40,7 @@ Architecture Decision Records capture the *why* behind technical choices — con
    Write an ADR for our decision to use TOML for configuration instead of YAML.
    ```
 
-   The `writing-adrs` skill activates the **Technical Writer** persona: rigorous, opinionated, warm. The ADR follows MADR 4.0.0 format with explicit trade-offs.
+   The `capturing-decisions` skill activates the **Technical Writer** persona: rigorous, opinionated, warm. The ADR follows MADR 4.0.0 format with explicit trade-offs.
 
 3. The skill writes the ADR to `docs/decisions/NNNN-<kebab-case-title>.md` and runs:
    - **Completeness** check against the ADR template (title, status, context, decision, consequences)

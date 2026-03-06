@@ -205,7 +205,7 @@ The quality gate layer uses **real tools for measurement and agents for judgment
 
 ### Token Counter
 
-**Implementation:** `bito-lint tokens` subcommand, using tiktoken `cl100k_base` encoding.
+**Implementation:** `bito-lint tokens` subcommand with pluggable tokenizer backends — Claude (38K verified vocab, greedy longest-match) or OpenAI (cl100k_base BPE). See ADR-0007.
 
 **Trigger:** Pre-commit on `.handoffs/` files.
 
@@ -442,7 +442,7 @@ Chosen option: "[Option N]", because [justification].
 **Goal:** Replace agent-based measurement with real tools.
 
 **Deliverables:**
-- Token counter hook (`tiktoken-rs` or equivalent)
+- Token counter hook (pluggable backends; see ADR-0007)
 - Readability scorer hook
 - Section completeness checker
 - Pre-commit hook integration

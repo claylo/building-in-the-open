@@ -14,7 +14,7 @@ Based on [Markdown Any Decision Records](https://github.com/adr/madr/blob/4.0.0/
 
 ```markdown
 ---
-status: {proposed | accepted | deprecated | superseded by NNNN}
+status: {proposed | accepted | rejected | deprecated | superseded by NNNN}
 date: YYYY-MM-DD
 decision-makers: [who was involved in the decision]
 consulted: [subject-matter experts consulted, if any]
@@ -27,6 +27,7 @@ informed: [who is kept up-to-date, if any]
 
 [Describe the context and problem in 2-3 sentences. Articulate the problem as a question where possible.]
 
+<!-- This is an optional element. Feel free to remove. -->
 ## Decision Drivers
 
 - [Force, concern, or constraint driving this decision]
@@ -42,15 +43,18 @@ informed: [who is kept up-to-date, if any]
 
 Chosen option: "[Option N]", because [justification].
 
+<!-- This is an optional element. Feel free to remove. -->
 ### Consequences
 
 - Good, because [positive consequence]
 - Bad, because [negative consequence]
 
+<!-- This is an optional element. Feel free to remove. -->
 ### Confirmation
 
 [How we will verify the decision was implemented correctly — review, test, metric, etc.]
 
+<!-- This is an optional element. Feel free to remove. -->
 ## Pros and Cons of the Options
 
 ### [Option 1]
@@ -58,6 +62,7 @@ Chosen option: "[Option N]", because [justification].
 [Brief description or pointer to more information]
 
 - Good, because [argument]
+- Neutral, because [argument]
 - Bad, because [argument]
 
 ### [Option 2]
@@ -65,8 +70,10 @@ Chosen option: "[Option N]", because [justification].
 [Brief description or pointer to more information]
 
 - Good, because [argument]
+- Neutral, because [argument]
 - Bad, because [argument]
 
+<!-- This is an optional element. Feel free to remove. -->
 ## More Information
 
 [Links to related ADRs, design docs, or resources. When/how to revisit this decision.]

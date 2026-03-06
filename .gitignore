@@ -17,3 +17,5 @@ PRIVATE_MEMORY.md
 test/scorecards/
 
 tools/token-compare/target/
+
+.private-journal/

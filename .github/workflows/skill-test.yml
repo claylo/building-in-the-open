@@ -39,10 +39,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Install bito-lint
-        run: cargo install bito-lint
+        run: cargo bininstall bito-lint
         env:
           CARGO_TERM_COLOR: always
 

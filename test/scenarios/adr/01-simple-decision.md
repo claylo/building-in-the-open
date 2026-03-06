@@ -1,5 +1,5 @@
 ---
-skill: writing-adrs
+skill: capturing-decisions
 persona: technical-writer
 expected_type: adr
 expected_path_pattern: "docs/decisions/*.md"
@@ -27,7 +27,7 @@ You are building a REST API for a task management application. The team needs to
 
 ## Expected behavior
 
-The writing-adrs skill should produce an ADR in MADR 4.0.0 format that:
+The capturing-decisions skill should produce an ADR in MADR 4.0.0 format that:
 - Has all required sections (title, status, context, decision, consequences)
 - Scores at or below grade 12 readability
 - Uses Technical Writer voice (rigorous, opinionated, explicit trade-offs)

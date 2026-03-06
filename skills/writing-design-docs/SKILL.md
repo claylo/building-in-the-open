@@ -5,20 +5,24 @@ description: Use when formalizing the output of a brainstorming session into a s
 
 # Writing Design Docs
 
+**Announce at start:** "I'm using the writing-design-docs skill with the Technical Writer persona to formalize the design."
+
 ## Overview
 
 Shape exploratory thinking into a document that a newcomer can read months later and understand what we built, why, and what we considered but rejected. Design docs are the narrative companions to atomic ADRs — they provide the composed story, while ADRs capture individual decisions.
 
-## When to Use
+## Context-dependent workflow
 
-- After `brainstorming` produces an accepted approach
-- Before significant feature work begins (the design doc is the "why and how" that the code doesn't capture)
-- When multiple ADRs need narrative context connecting them
-- When you want to document architectural evolution for future contributors
+Check whether `superpowers:brainstorming` is in your available skills list.
+
+- **If yes** — read `references/with-superpowers.md` for When to Use, Step 1, and Integration details.
+- **If no** — read `references/without-superpowers.md` instead.
+
+Then return here and continue with the Quick Reference and Process (Step 2 onward).
 
 ## When NOT to Use
 
-- For a single decision — use `writing-adrs` instead
+- For a single decision — use `capturing-decisions` instead
 - For user-facing documentation — use `writing-end-user-docs`
 - For session context capture — use `curating-context` (handoff)
 - For trivial changes that don't involve architectural choices
@@ -35,14 +39,6 @@ Shape exploratory thinking into a document that a newcomer can read months later
 | Related decisions | Links to ADRs | Yes |
 
 ## Process
-
-### Step 1: Gather source material
-
-If coming from a `brainstorming` session, locate the brainstorming output (typically in `docs/plans/` or the conversation itself). Identify:
-- The chosen approach
-- Alternatives that were discussed and rejected
-- Key decisions that emerged
-- Constraints and trade-offs acknowledged
 
 ### Step 2: Load the persona and template
 
@@ -78,7 +74,7 @@ Scan the finished design doc for discrete technical decisions — places where w
 > ...
 > Which of these should get their own ADRs?"
 
-Per ADR-0004, this is prompted, not automatic. The user/lead agent decides which decisions warrant individual ADRs. For each approved decision, invoke `writing-adrs` and then add the link to the design doc's Related Decisions section.
+Per ADR-0004, this is prompted, not automatic. The user/lead agent decides which decisions warrant individual ADRs. For each approved decision, invoke `capturing-decisions` and then add the link to the design doc's Related Decisions section.
 
 ### Step 5: Quality check
 
@@ -94,13 +90,6 @@ Before saving, verify:
 ### Step 6: Tone firewall
 
 Run through editorial review. The Technical Writer persona voice should be consistent: first-person plural, opinionated but grounded, trade-offs explicit, no hedge words.
-
-## Integration
-
-- **Upstream:** `brainstorming` produces exploratory output that this skill formalizes
-- **Downstream:** `writing-adrs` captures individual decisions extracted from the design doc
-- **Referenced by:** Handoffs, changelogs, and end-user docs link to design docs for architectural context
-- **Paired with:** `writing-adrs` — design docs and ADRs are complementary, not redundant. The design doc is the narrative; ADRs are the atomic decisions.
 
 ## Common Mistakes
 
