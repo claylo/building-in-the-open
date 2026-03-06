@@ -19,7 +19,7 @@ Three layers, loosely coupled:
 ┌─────────────────────────────────────────────────────┐
 │  SKILLS (artifact-specific workflows)               │
 │  "What are we producing?"                           │
-│  curating-context, writing-adrs, writing-design-    │
+│  curating-context, capturing-decisions, writing-     │
 │  docs, writing-end-user-docs, writing-changelogs,   │
 │  editorial-review                                   │
 ├─────────────────────────────────────────────────────┤
@@ -141,7 +141,7 @@ Six artifact-specific skills, organized by when they fire in a project's lifecyc
 
 **Inherits:** The `/handoff` invocation name, enhancing it with private context capture and quality gates.
 
-### writing-adrs
+### capturing-decisions
 
 **Trigger:** After a technical decision is made — often after `brainstorming` converges, or when a decision made implicitly during implementation needs to be captured.
 
@@ -253,7 +253,7 @@ brainstorming
     │
     ├──→ writing-design-docs (formalize the exploration)
     │       │
-    │       └──→ writing-adrs (extract individual decisions)
+    │       └──→ capturing-decisions (extract individual decisions)
     │
     ▼
 writing-plans
@@ -276,7 +276,7 @@ editorial-review (gate before commit/merge)
 
 **Key integration points:**
 
-1. **brainstorming → writing-design-docs → writing-adrs.** Brainstorming produces exploratory output. The design-docs skill reshapes it through the Technical Writer persona. Discrete decisions get extracted into ADRs — one brainstorming session might produce one design doc and several ADRs.
+1. **brainstorming → writing-design-docs → capturing-decisions.** Brainstorming produces exploratory output. The design-docs skill reshapes it through the Technical Writer persona. Discrete decisions get extracted into ADRs — one brainstorming session might produce one design doc and several ADRs.
 
 2. **finishing-a-development-branch → writing-changelogs + curating-context.** Before merging, we capture what changed (changelog), update user-facing docs (end-user-docs), and write the handoff (curating-context).
 
@@ -430,7 +430,7 @@ Chosen option: "[Option N]", because [justification].
 **Goal:** ADRs and design docs as first-class workflows.
 
 **Deliverables:**
-- `writing-adrs` skill
+- `capturing-decisions` skill
 - `writing-design-docs` skill
 - Design doc template
 - Integration with `brainstorming` output

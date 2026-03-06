@@ -12,7 +12,11 @@
 
 ## Install the plugin
 
-Clone into your Claude Code plugins directory:
+```sh
+claude plugin add claylo-marketplace/building-in-the-open
+```
+
+Or install manually by cloning into your Claude Code plugins directory:
 
 ```sh
 git clone https://github.com/claylo/building-in-the-open ~/.claude/plugins/building-in-the-open
@@ -26,7 +30,7 @@ Start a new Claude Code session and confirm the plugin loaded by checking that t
 
 ## Configure quality gates
 
-The fastest way to configure quality gates is to run the `onboarding` skill — it interviews you about your writing standards and generates a `.bito-lint.yaml` config. Alternatively, configure manually as described below.
+The fastest way to configure quality gates is to run the `onboarding` skill — it interviews you about your writing standards and generates a `.bito.yaml` config. Alternatively, configure manually as described below.
 
 ## Pre-commit hook
 
@@ -70,7 +74,7 @@ This lets the editorial-review skill call quality gate tools directly during age
 Set your preferred English dialect for spelling enforcement:
 
 ```yaml
-# .bito-lint.yaml
+# .bito.yaml
 dialect: en-us  # en-us | en-gb | en-ca | en-au
 ```
 
@@ -81,7 +85,7 @@ When set, all skills check for dialect-consistent spelling in generated artifact
 ### Quality thresholds and rules
 
 ```yaml
-# .bito-lint.yaml
+# .bito.yaml
 max_grade: 12.0
 passive_max_percent: 15.0
 tokenizer: claude

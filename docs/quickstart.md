@@ -80,13 +80,12 @@ The full draft-review-commit loop shows how the tone firewall works in practice.
 
 ## Batch quality checks
 
-Run all quality gates across all committed artifacts at once:
+Run quality gates on any artifact:
 
 ```sh
-just lint-docs
+bito-lint lint .handoffs/2026-02-08-143000-my-session.md
+bito-lint lint docs/decisions/0001-toml-for-configuration.md
+bito-lint lint docs/designs/2026-02-08-authentication-system.md
 ```
 
-This checks:
-- All handoffs: token budget + completeness
-- All ADRs: completeness
-- All design docs: readability + completeness
+The `lint` subcommand matches the file path against rules in `.bito.yaml` and runs all applicable checks (tokens, completeness, readability) in one pass. See the [README](../README.md#quality-gates) for an example config.

@@ -1,0 +1,15 @@
+# building-in-the-open plugin config for bito-lint v0.3+
+#
+# Custom entries define the plugin's writer personas. The SessionStart hook
+# loads these via `bito-lint custom show <name>` and injects them into
+# Claude's context so every skill gets the right voice from the start.
+
+custom:
+  technical-writer:
+    file: personas/technical-writer.md
+  context-curator:
+    file: personas/context-curator.md
+  doc-writer:
+    file: personas/doc-writer.md
+  marketing-copywriter:
+    file: personas/marketing-copywriter.md

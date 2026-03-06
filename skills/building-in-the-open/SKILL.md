@@ -38,10 +38,10 @@ Verify: `bito-lint doctor`
 
 ### Configuration file
 
-bito-lint discovers config files by walking up from the current directory to the nearest `.git` boundary. Supported formats: `.bito-lint.yaml`, `.bito-lint.toml`, `.bito-lint.json`.
+bito-lint discovers config files by walking up from the current directory to the nearest `.git` boundary. Supported names: `.bito.yaml`, `.bito.toml`, `.bito.json` (also `.bito-lint.*` for backwards compatibility).
 
 ```yaml
-# .bito-lint.yaml — project-wide defaults (all fields optional)
+# .bito.yaml — project-wide defaults (all fields optional)
 
 dialect: en-us            # en-us | en-gb | en-ca | en-au — spelling enforcement
 token_budget: 2000        # default budget for `bito-lint tokens`
@@ -57,7 +57,7 @@ templates:
 
 **Discovery order** (highest precedence first):
 1. `--config <path>` CLI flag
-2. `.bito-lint.yaml` / `.bito-lint.toml` / `.bito-lint.json` in current or ancestor directory (up to `.git` boundary)
+2. `.bito.yaml` / `.bito.toml` / `.bito.json` (or `.bito-lint.*`) in current or ancestor directory (up to `.git` boundary)
 3. `~/.config/bito-lint/config.toml` (user-level defaults)
 
 **Environment variable overrides** — any field can be set via `BITO_LINT_` prefix:
@@ -73,7 +73,7 @@ BITO_LINT_TOKENIZER=openai
 Instead of hardcoding check logic in hook scripts, declare what checks run on what files in your config. The `rules` array maps glob patterns to checks with per-rule settings:
 
 ```yaml
-# .bito-lint.yaml
+# .bito.yaml
 rules:
   - paths: [".handoffs/*.md"]
     checks:

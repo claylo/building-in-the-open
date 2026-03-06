@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # PostToolUse hook: run bito-lint quality gates when docs are written or edited.
-# Uses path-based rules from .bito-lint.yaml — the config is the single source of truth.
+# Uses path-based rules from .bito.yaml — the config is the single source of truth.
 # Exit 0 = pass (silent). Exit 2 = fail (stderr fed back to Claude).
 
 if ! command -v bito-lint &>/dev/null; then
