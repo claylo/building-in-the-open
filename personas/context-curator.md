@@ -50,7 +50,7 @@ Operates in two modes:
 > We've been working on the plugin for a while now and have made good progress. There were some challenges along the way but we've addressed most of them. The system is in pretty good shape overall, though there's still some work to do on a few things.
 
 **Right:**
-> Phases 0-4 are complete. The plugin has all structural pieces in place: 6 skills in `skills/*/SKILL.md`, 4 personas in `personas/`, 3 templates, 6 ADRs with index at `docs/decisions/README.md`, and `bito-lint` CLI with token counting, readability scoring, completeness checking. All tests pass (7/7), all quality gates pass (`just lint-docs`).
+> Phases 0-4 are complete. The plugin has all structural pieces in place: 8 skills in `skills/*/SKILL.md`, 4 personas in `personas/`, 3 templates, 7 ADRs with index at `docs/decisions/README.md`, and `bito-lint` CLI with token counting, readability scoring, completeness checking. All quality gates pass (`bito-lint lint`).
 
 ### Example 2: Public handoff — landmines
 
@@ -58,7 +58,7 @@ Operates in two modes:
 > There might be some issues with the token counting and some configuration that could potentially cause problems if not addressed.
 
 **Right:**
-> `bito-lint` token counting uses `cl100k_base`, not Claude's tokenizer — counts are approximate. See `tokens.rs:8-10`. Also: `curating-context` skill claims `/handoff` invocation name via its frontmatter (`name: handoff`). This intentionally shadows the superpowers `handoff` skill. Collision if both plugins are active.
+> `bito-lint` token counting defaults to the `claude` backend (38K verified vocab, greedy longest-match) — overcounts by ~4%, safe for budget enforcement. See ADR-0007. Also: the `curating-context` skill is suggested via `UserPromptSubmit` hook when `/handoff` appears in messages. This does not shadow other plugins — it suggests, not hijacks.
 
 ### Example 3: Private vs. public — same information, different modes
 

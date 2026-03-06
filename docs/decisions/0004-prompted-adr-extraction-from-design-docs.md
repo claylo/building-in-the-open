@@ -23,7 +23,7 @@ Design documents often contain multiple discrete technical decisions embedded in
 
 - Prompted extraction (skill identifies decisions, asks whether to create ADRs)
 - Automatic extraction (every decision-shaped paragraph becomes an ADR)
-- Manual extraction (author explicitly invokes `writing-adrs` for each decision)
+- Manual extraction (author explicitly invokes `capturing-decisions` for each decision)
 
 ## Decision Outcome
 
@@ -64,7 +64,7 @@ Every passage that looks like a decision gets an ADR automatically.
 
 ### Manual extraction
 
-The author explicitly invokes `writing-adrs` whenever they recognize a decision worth capturing.
+The author explicitly invokes `capturing-decisions` whenever they recognize a decision worth capturing.
 
 - Good, because only intentional, high-value decisions become ADRs
 - Good, because no automation complexity

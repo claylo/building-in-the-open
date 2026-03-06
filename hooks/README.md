@@ -10,34 +10,22 @@ Registered automatically when the plugin is installed.
 
 Checks whether `bito-lint` is on PATH. If missing, injects install instructions into Claude's context.
 
+With bito-lint v0.3+, also announces available custom content entries (writer personas) from `.bito.yaml`. Skills can load a persona on demand via `bito-lint custom show <name> --config .bito.yaml`. The four personas registered are:
+
+| Entry | Persona | Used by |
+|-------|---------|---------|
+| `technical-writer` | Rigorous, opinionated, warm | ADRs, design docs, changelogs |
+| `context-curator` | Dense, scannable, no flair | Handoffs, memory |
+| `doc-writer` | Accessible, example-first | End-user docs |
+| `marketing-copywriter` | Honest enthusiasm | READMEs, release announcements |
+
 ### PostToolUse (Write|Edit) — `check-docs-on-write.sh`
 
-Runs bito-lint quality gates in real time whenever Claude writes or edits files in watched directories:
-
-| Path pattern | Checks |
-|---|---|
-| `.handoffs/*.md` | tokens (budget 2000) + completeness (handoff) |
-| `docs/decisions/*.md` | completeness (adr) |
-| `docs/designs/*.md` | completeness (design-doc) + readability (max-grade 12) |
-| `README.md`, other `docs/**/*.md` | readability (max-grade 8) + grammar |
-
-Specific paths (handoffs, ADRs, design docs) match first. The README/docs catch-all only fires for general documentation that doesn't match the patterns above.
+Runs `bito-lint lint` on any markdown file Claude writes or edits. The lint command matches the file path against rules in `.bito.yaml` and runs all applicable checks in one pass. No match = silent pass.
 
 On failure, stderr is fed back to Claude so it can fix the issue automatically.
 
-### Invocation times (bito-lint 0.1.7, Apple M3 Max)
-
-| Check | Wall time |
-|---|---|
-| `tokens --budget 2000` | ~100ms |
-| `completeness --template handoff` | ~13ms |
-| `completeness --template adr` | ~11ms |
-| `completeness --template design-doc` | ~33ms |
-| `readability --max-grade 12` | ~20ms |
-| `readability --max-grade 8` | ~20ms |
-| `grammar` | ~15ms |
-
-Worst case (handoff: tokens + completeness) adds ~115ms to a Write. Design docs (completeness + readability) add ~50ms. READMEs and general docs (readability + grammar) add ~35ms.
+Individual checks are fast (~10–100ms on Apple M3 Max). A `bito-lint lint` pass typically adds under 150ms to a Write.
 
 ## Git hook — `pre-commit-docs`
 

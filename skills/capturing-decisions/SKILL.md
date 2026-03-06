@@ -63,7 +63,7 @@ Use this mapping:
 4. **Check dialect.** Check for `BITO_LINT_DIALECT` environment variable or the project's bito-lint config for a dialect preference (en-us, en-gb, en-ca, en-au). If set, use that dialect's spelling conventions consistently throughout the draft. If not set, default to en-US.
 5. **Create the ADR** from `templates/adr.md`.
    - Default `status` to `proposed` unless the change set includes implementation and agreement to accept.
-   - Title format: `NNNN: [Problem solved and solution chosen]`. Good: "0007: Token counting via tiktoken-rs for handoff budget enforcement." Bad: "0007: Token counting decision."
+   - Title format: `NNNN: [Problem solved and solution chosen]`. Good: "0007: Pluggable tokenizer backends for handoff budget enforcement." Bad: "0007: Token counting decision."
    - Frame the Context and Problem Statement as a question where possible.
    - Minimum two Considered Options. Three is ideal. Include options you rejected — future readers will ask "why didn't we just...?"
    - At least one "Good, because..." and one "Bad, because..." in Consequences. If you can't name a downside, you haven't thought hard enough about the trade-off.

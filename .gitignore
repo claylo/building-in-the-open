@@ -19,3 +19,5 @@ test/scorecards/
 tools/token-compare/target/
 
 .private-journal/
+
+dist/

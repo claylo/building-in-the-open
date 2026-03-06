@@ -42,17 +42,21 @@ Each skill announces itself and its persona when invoked—so you always know wh
 ## Installation
 
 ```sh
-git clone https://github.com/claylo/building-in-the-open ~/.claude/plugins/building-in-the-open
+claude plugin add claylo-marketplace/building-in-the-open
 ```
 
-Claude Code discovers plugins automatically. No additional configuration needed.
+Or install manually:
+
+```sh
+git clone https://github.com/claylo/building-in-the-open ~/.claude/plugins/building-in-the-open
+```
 
 **Quality gates** (optional but recommended):
 
 ```sh
-cargo binstall bito-lint          # pre-built binary, fastest
-brew install claylo/brew/bito-lint # macOS / Linux
+brew install claylo/brew/bito-lint # macOS / Linux, easiest
 npm install -g @claylo/bito-lint   # wraps the native binary
+cargo binstall bito-lint           # if you've got a rust environment
 ```
 
 Verify: `bito-lint doctor`
@@ -73,7 +77,7 @@ Each skill lives in `skills/<name>/SKILL.md` and defines a complete workflow for
 | Skill | What it produces | Persona |
 |-------|-----------------|---------|
 | `building-in-the-open` | Routing + bito-lint setup and configuration | — |
-| `onboarding` | Guided interview → `.bito-lint.yaml` config | — |
+| `onboarding` | Guided interview → `.bito.yaml` config | — |
 | `curating-context` | Public handoffs + private memory | Context Curator |
 | `capturing-decisions` | Architecture decision records (MADR 4.0.0) | Technical Writer |
 | `writing-design-docs` | Design documents | Technical Writer |
@@ -99,7 +103,7 @@ Personas compose. A README uses Marketing Copywriter above the fold and Doc Writ
 Define what checks run on what files in your config—no hardcoded scripts:
 
 ```yaml
-# .bito-lint.yaml
+# .bito.yaml
 rules:
   - paths: [".handoffs/*.md"]
     checks:
