@@ -86,11 +86,11 @@ The mechanism matters less than the content. **Focus on what changes future beha
 
 ### Step 3: Write the public handoff
 
-Load the **Context Curator** persona from `../../personas/context-curator.md` (public mode).
+Load the **Context Curator** persona from `${CLAUDE_PLUGIN_ROOT}/personas/context-curator.md` (public mode).
 
 **Dialect:** Check for `BITO_DIALECT` environment variable or the project's bito config for a dialect preference (en-us, en-gb, en-ca, en-au). If set, use that dialect's spelling conventions consistently throughout the draft. If not set, default to en-US.
 
-Use the handoff template from `../../templates/handoff.md`. Fill every section:
+Use the handoff template from `${CLAUDE_PLUGIN_ROOT}/templates/handoff.md`. Fill every section:
 
 1. **Where things stand** — Current state in 2-3 sentences. What works, what doesn't yet.
 2. **Decisions made** — Bulleted, with brief rationale or link to ADR.

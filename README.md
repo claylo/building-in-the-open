@@ -8,7 +8,7 @@ That's fine for throwaway drafts. It's not fine for anything that reaches your r
 
 Whether you're a developer capturing the reasoning behind architectural decisions or a technical writer maintaining documentation—the problem is the same. AI agents need guardrails on their prose, not just their code. Technical writers are [already discovering this](https://medium.com/@jennifer.oakleytx/day-1-with-claude-code-a-technical-writers-first-impressions-8ab46cf704e8)—and so are [UX writers](https://uxwritinghub.com/claude-code-ux-writing/) and [documentation teams](https://www.mintlify.com/blog/how-mintlify-uses-claude-code-as-a-technical-writing-assistant).
 
-Eight skills. Four writer personas. One tone firewall. Zero embarrassing commits.
+Seven skills. Four writer personas. One tone firewall. Zero embarrassing commits.
 
 ### What this is—and isn't
 
@@ -23,7 +23,7 @@ Three layers, loosely coupled:
 │  SKILLS (artifact-specific workflows)               │
 │  curating-context, capturing-decisions, writing-    │
 │  design-docs, writing-end-user-docs, writing-       │
-│  changelogs, editorial-review                       │
+│  changelogs, editorial-review, building-in-the-open │
 ├─────────────────────────────────────────────────────┤
 │  PERSONAS (composable voice layer)                  │
 │  technical-writer, doc-writer, marketing-           │
@@ -77,7 +77,6 @@ Each skill lives in `skills/<name>/SKILL.md` and defines a complete workflow for
 | Skill | What it produces | Persona |
 |-------|-----------------|---------|
 | `building-in-the-open` | Routing + bito setup and configuration | — |
-| `onboarding` | Guided interview → `.bito.yaml` config | — |
 | `curating-context` | Public handoffs + private memory | Context Curator |
 | `capturing-decisions` | Architecture decision records (MADR 4.0.0) | Technical Writer |
 | `writing-design-docs` | Design documents | Technical Writer |
@@ -140,7 +139,7 @@ The rule: if you wouldn't say it at a technical conference, it doesn't reach the
 .bus-factor/        Archived handoffs (project timeline)
 .claude-plugin/     Plugin metadata
 .handoffs/          Active handoff documents (committed)
-agents/             Agent templates (editorial reviewer)
+agents/             Subagent definitions (editorial reviewer)
 record/decisions/     Architecture decision records
 record/designs/       Design documents
 hooks/              Plugin hooks + pre-commit hook

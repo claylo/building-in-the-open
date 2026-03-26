@@ -37,7 +37,7 @@ This is the tone firewall in practice — the enforcement mechanism behind ADR-0
 | Deterministic | `bito tokens` | Token count vs. budget | Handoffs over 2,000 tokens |
 | Deterministic | `bito readability` | Flesch-Kincaid grade level | Above persona target (≤8 for Doc Writer, ≤12 for Technical Writer) |
 | Deterministic | `bito completeness` | Required sections present and substantive | Missing or placeholder sections |
-| Agent-based | `../../agents/editorial-reviewer.md` | Conference-talk test, negative refs, assumed context, tone consistency | Any passage that would be uncomfortable on stage |
+| Agent-based | `${CLAUDE_PLUGIN_ROOT}/agents/editorial-reviewer.md` | Conference-talk test, negative refs, assumed context, tone consistency | Any passage that would be uncomfortable on stage |
 
 ## Process
 
@@ -80,11 +80,7 @@ If any deterministic check fails, report the failure. The artifact should be rev
 
 ### Step 3: Run agent-based review
 
-Load the editorial reviewer agent template from `../../agents/editorial-reviewer.md`. Fill the placeholders:
-
-- `{ARTIFACT_CONTENT}` — the full text of the artifact
-- `{ARTIFACT_TYPE}` — from Step 1
-- `{PERSONA_NAME}` — from Step 1
+The `context: fork` frontmatter on this skill delegates to the editorial-reviewer agent automatically. The agent receives this skill's instructions as its task, along with the artifact content, type, and target persona from the earlier steps.
 
 The agent works through six checks:
 
@@ -150,8 +146,8 @@ Do not auto-fix agent review issues. The reviewer identifies problems and sugges
 ## Integration
 
 - **Called by:** Every other writing skill as its final step (`curating-context`, `capturing-decisions`, `writing-design-docs`, `writing-end-user-docs`, `writing-changelogs`)
-- **Also triggered by:** Pre-commit hook (`../../hooks/pre-commit-docs`) for manually-written or externally-modified docs
-- **Depends on:** `bito` CLI (`cargo install bito`) for deterministic checks, `../../agents/editorial-reviewer.md` for agent-based review
+- **Also triggered by:** Pre-commit hook (`${CLAUDE_PLUGIN_ROOT}/hooks/pre-commit-docs`) for manually-written or externally-modified docs
+- **Depends on:** `bito` CLI (`cargo install bito`) for deterministic checks, `${CLAUDE_PLUGIN_ROOT}/agents/editorial-reviewer.md` for agent-based review
 - **Enforces:** ADR-0002 (tone firewall on commit path), ADR-0003 (real tools for measurement, agents for judgment), ADR-0005 (token budget for handoffs)
 
 ## Common Mistakes
