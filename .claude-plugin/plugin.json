@@ -20,19 +20,27 @@
   ],
   "userConfig": {
     "doc_output_dir": {
+      "title": "Doc output directory",
       "description": "Directory for structured docs (ADRs, designs). Example: record, docs",
+      "type": "string",
       "sensitive": false
     },
     "dialect": {
-      "description": "English dialect for spelling enforcement (en-us, en-gb, en-ca, en-au)",
+      "title": "English dialect",
+      "description": "Dialect for spelling enforcement (en-us, en-gb, en-ca, en-au)",
+      "type": "string",
       "sensitive": false
     },
     "max_grade": {
-      "description": "Maximum Flesch-Kincaid reading level (8=accessible, 10=moderate, 12=dense)",
+      "title": "Max reading level",
+      "description": "Maximum Flesch-Kincaid grade (8=accessible, 10=moderate, 12=dense)",
+      "type": "string",
       "sensitive": false
     },
     "passive_max_percent": {
-      "description": "Maximum percentage of passive voice allowed (10=strict, 15=moderate, 25=relaxed)",
+      "title": "Max passive voice %",
+      "description": "Maximum passive voice percentage (10=strict, 15=moderate, 25=relaxed)",
+      "type": "string",
       "sensitive": false
     }
   }
