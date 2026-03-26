@@ -1,7 +1,7 @@
 {
   "name": "building-in-the-open",
   "description": "Personas, skills, and quality gates for producing professional, self-contained development artifacts — from internal handoffs to end-user documentation",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": {
     "name": "Clay Loveless",
     "email": "clay@loveless.net"

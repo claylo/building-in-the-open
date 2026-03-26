@@ -2,7 +2,7 @@
 
 **Persona:** Technical Writer
 
-**Location:** `docs/designs/YYYY-MM-DD-<short-kebab-topic>.md`
+**Location:** `record/designs/YYYY-MM-DD-<short-kebab-topic>.md`
 
 ---
 

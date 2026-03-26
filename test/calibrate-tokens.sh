@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Token Calibration Study (bito-lint native)
-# Compares bito-lint --tokenizer claude (ctoc greedy) vs --tokenizer openai (bpe cl100k_base)
+# Token Calibration Study (bito native)
+# Compares bito --tokenizer claude (ctoc greedy) vs --tokenizer openai (bpe cl100k_base)
 # vs Anthropic count_tokens API (ground truth) across the full plugin corpus.
 #
-# Requires: bito-lint >= 0.1.7, jq, curl
+# Requires: bito >= 0.1.7, jq, curl
 # Optional: ANTHROPIC_API_KEY for three-way comparison
 
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
@@ -31,13 +31,13 @@ CORPUS=(
 )
 
 # ── Check dependencies ───────────────────────────────────────────────
-if ! command -v bito-lint &>/dev/null; then
-    echo "ERROR: bito-lint not found on PATH" >&2
+if ! command -v bito &>/dev/null; then
+    echo "ERROR: bito not found on PATH" >&2
     exit 1
 fi
 
-BITO_VERSION=$(bito-lint --version | awk '{print $2}')
-echo "bito-lint version: $BITO_VERSION" >&2
+BITO_VERSION=$(bito --version | awk '{print $2}')
+echo "bito version: $BITO_VERSION" >&2
 
 if ! command -v jq &>/dev/null; then
     echo "ERROR: jq not found on PATH" >&2
@@ -64,11 +64,11 @@ for relpath in "${CORPUS[@]}"; do
         continue
     fi
 
-    # bito-lint claude backend (ctoc greedy, 38K verified vocab)
-    cl=$(bito-lint tokens --json --tokenizer claude "$filepath" | jq -r '.count')
+    # bito claude backend (ctoc greedy, 38K verified vocab)
+    cl=$(bito tokens --json --tokenizer claude "$filepath" | jq -r '.count')
 
-    # bito-lint openai backend (bpe cl100k_base, exact)
-    oai=$(bito-lint tokens --json --tokenizer openai "$filepath" | jq -r '.count')
+    # bito openai backend (bpe cl100k_base, exact)
+    oai=$(bito tokens --json --tokenizer openai "$filepath" | jq -r '.count')
 
     # API ground truth
     api_count="-"
@@ -109,7 +109,7 @@ echo ""
 echo "# Token Calibration Report"
 echo ""
 echo "Date: $(date -u +%Y-%m-%d)"
-echo "bito-lint: $BITO_VERSION"
+echo "bito: $BITO_VERSION"
 echo "Corpus: ${#FILES[@]} files from building-in-the-open plugin"
 echo ""
 echo "Ground truth: Anthropic \`count_tokens\` API (model: $API_MODEL)"

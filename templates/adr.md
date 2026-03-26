@@ -4,7 +4,7 @@ Based on [Markdown Any Decision Records](https://github.com/adr/madr/blob/4.0.0/
 
 **Persona:** Technical Writer
 
-**Location:** `docs/decisions/NNNN-<short-kebab-title>.md`
+**Location:** `record/decisions/NNNN-<short-kebab-title>.md`
 
 **Numbering:** Sequential four-digit, zero-padded (0001, 0002, ...).
 

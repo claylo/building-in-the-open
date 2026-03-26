@@ -5,7 +5,7 @@ description: Use at release time or incrementally as features land, when writing
 
 # Writing Changelogs
 
-**Announce at start:** "I'm using the writing-changelogs skill — Technical Writer for the changelog, Marketing Copywriter for the release announcement."
+**Announce at start:** "I'm using the **bito** writing-changelogs skill — Technical Writer for the changelog, Marketing Copywriter for the release announcement."
 
 ## Overview
 
@@ -49,9 +49,9 @@ For each change, note:
 
 ### Step 2: Write the CHANGELOG.md entry
 
-Load the **Technical Writer** persona from `personas/technical-writer.md`.
+Load the **Technical Writer** persona from `../../personas/technical-writer.md`.
 
-**Dialect:** Check for `BITO_LINT_DIALECT` environment variable or the project's bito-lint config for a dialect preference (en-us, en-gb, en-ca, en-au). If set, use that dialect's spelling conventions consistently throughout both the changelog entry and the release announcement. If not set, default to en-US.
+**Dialect:** Check for `BITO_DIALECT` environment variable or the project's bito config for a dialect preference (en-us, en-gb, en-ca, en-au). If set, use that dialect's spelling conventions consistently throughout both the changelog entry and the release announcement. If not set, default to en-US.
 
 Follow [Keep a Changelog](https://keepachangelog.com/) conventions:
 
@@ -84,7 +84,7 @@ Guidelines for the changelog entry:
 
 ### Step 3: Write the release announcement
 
-Load the **Marketing Copywriter** persona from `personas/marketing-copywriter.md`.
+Load the **Marketing Copywriter** persona from `../../personas/marketing-copywriter.md`.
 
 Structure:
 

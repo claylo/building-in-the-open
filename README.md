@@ -30,7 +30,7 @@ Three layers, loosely coupled:
 │  copywriter, context-curator                        │
 ├─────────────────────────────────────────────────────┤
 │  TOOLING (quality gates)                            │
-│  bito-lint: token counter, readability scorer,      │
+│  bito: token counter, readability scorer,      │
 │  completeness checker, path-based rules engine      │
 └─────────────────────────────────────────────────────┘
 ```
@@ -54,12 +54,12 @@ git clone https://github.com/claylo/building-in-the-open ~/.claude/plugins/build
 **Quality gates** (optional but recommended):
 
 ```sh
-brew install claylo/brew/bito-lint # macOS / Linux, easiest
-npm install -g @claylo/bito-lint   # wraps the native binary
-cargo binstall bito-lint           # if you've got a rust environment
+brew install claylo/brew/bito # macOS / Linux, easiest
+npm install -g @claylo/bito   # wraps the native binary
+cargo binstall bito           # if you've got a rust environment
 ```
 
-Verify: `bito-lint doctor`
+Verify: `bito doctor`
 
 See the [installation guide](docs/installation.md) for pre-commit hooks, MCP server setup, and dialect configuration.
 
@@ -76,7 +76,7 @@ Each skill lives in `skills/<name>/SKILL.md` and defines a complete workflow for
 
 | Skill | What it produces | Persona |
 |-------|-----------------|---------|
-| `building-in-the-open` | Routing + bito-lint setup and configuration | — |
+| `building-in-the-open` | Routing + bito setup and configuration | — |
 | `onboarding` | Guided interview → `.bito.yaml` config | — |
 | `curating-context` | Public handoffs + private memory | Context Curator |
 | `capturing-decisions` | Architecture decision records (MADR 4.0.0) | Technical Writer |
@@ -110,11 +110,11 @@ rules:
       tokens: { budget: 2000 }
       completeness: { template: handoff }
 
-  - paths: ["docs/decisions/*.md"]
+  - paths: ["record/decisions/*.md"]
     checks:
       completeness: { template: adr }
 
-  - paths: ["docs/designs/*.md"]
+  - paths: ["record/designs/*.md"]
     checks:
       completeness: { template: design-doc }
       readability: { max_grade: 12 }
@@ -123,7 +123,7 @@ rules:
 Run all matching checks in one pass:
 
 ```sh
-bito-lint lint docs/decisions/0001-my-adr.md
+bito lint record/decisions/0001-my-adr.md
 ```
 
 The `editorial-review` skill adds agent-based judgment on top of these deterministic checks—catching sarcasm, implied criticism, and tone mismatches that a pattern matcher can't reach.
@@ -141,8 +141,8 @@ The rule: if you wouldn't say it at a technical conference, it doesn't reach the
 .claude-plugin/     Plugin metadata
 .handoffs/          Active handoff documents (committed)
 agents/             Agent templates (editorial reviewer)
-docs/decisions/     Architecture decision records
-docs/designs/       Design documents
+record/decisions/     Architecture decision records
+record/designs/       Design documents
 hooks/              Plugin hooks + pre-commit hook
 personas/           Writer voice definitions
 skills/             Artifact-specific workflows
@@ -153,13 +153,13 @@ templates/          Document structure templates
 
 This project's own ADRs document the key design choices:
 
-- [ADR-0001](docs/decisions/0001-composable-persona-layer-for-artifact-generation.md) — Composable persona layer
-- [ADR-0002](docs/decisions/0002-tone-firewall-on-commit-path-not-writing-path.md) — Tone firewall on commit path
-- [ADR-0003](docs/decisions/0003-real-tools-for-measurement-agents-for-judgment.md) — Real tools for measurement, agents for judgment
-- [ADR-0004](docs/decisions/0004-prompted-adr-extraction-from-design-docs.md) — Prompted ADR extraction
-- [ADR-0005](docs/decisions/0005-token-budget-for-public-handoffs.md) — 2,000-token handoff budget
-- [ADR-0006](docs/decisions/0006-private-memory-gitignored-handoffs-committed.md) — Private memory gitignored, handoffs committed
-- [ADR-0007](docs/decisions/0007-use-pluggable-tokenizer-backends-in-bito-lint.md) — Pluggable tokenizer backends
+- [ADR-0001](record/decisions/0001-composable-persona-layer-for-artifact-generation.md) — Composable persona layer
+- [ADR-0002](record/decisions/0002-tone-firewall-on-commit-path-not-writing-path.md) — Tone firewall on commit path
+- [ADR-0003](record/decisions/0003-real-tools-for-measurement-agents-for-judgment.md) — Real tools for measurement, agents for judgment
+- [ADR-0004](record/decisions/0004-prompted-adr-extraction-from-design-docs.md) — Prompted ADR extraction
+- [ADR-0005](record/decisions/0005-token-budget-for-public-handoffs.md) — 2,000-token handoff budget
+- [ADR-0006](record/decisions/0006-private-memory-gitignored-handoffs-committed.md) — Private memory gitignored, handoffs committed
+- [ADR-0007](record/decisions/0007-use-pluggable-tokenizer-backends-in-bito.md) — Pluggable tokenizer backends
 
 ## License
 

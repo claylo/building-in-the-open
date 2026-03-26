@@ -9,7 +9,7 @@
     {
       "name": "building-in-the-open",
       "description": "Help coding agents produce clean development knowledge artifacts.",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "source": "./",
       "author": {
         "name": "Clay Loveless",

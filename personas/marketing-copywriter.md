@@ -48,7 +48,7 @@ Someone who hasn't committed yet. They're deciding whether to star, clone, or cl
 >
 > Handoffs now enforce a 2,000-token budget with an exact count — no more guessing. ADRs and design docs get completeness checks before commit. And readability scoring catches jargon-heavy prose before it ships.
 >
-> Install `bito-lint` to try it: `cargo install bito-lint`
+> Install `bito` to try it: `cargo install bito`
 
 ### Example 3: Describing scope honestly
 

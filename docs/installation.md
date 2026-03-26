@@ -3,11 +3,11 @@
 ## Prerequisites
 
 - [Claude Code](https://docs.anthropic.com/en/docs/claude-code) CLI installed and configured
-- [bito-lint](https://github.com/claylo/bito-lint) for quality gate checks (install via any of):
+- [bito](https://github.com/claylo/bito) for quality gate checks (install via any of):
   ```sh
-  cargo binstall bito-lint          # pre-built binary, fastest
-  brew install claylo/brew/bito-lint # macOS / Linux
-  npm install -g @claylo/bito-lint   # wraps the native binary
+  cargo binstall bito          # pre-built binary, fastest
+  brew install claylo/brew/bito # macOS / Linux
+  npm install -g @claylo/bito   # wraps the native binary
   ```
 
 ## Install the plugin
@@ -52,13 +52,13 @@ source ~/.claude/plugins/building-in-the-open/hooks/pre-commit-docs
 
 ## MCP server (optional)
 
-For AI-driven quality checks during writing sessions, configure bito-lint's MCP server in your project's `.mcp.json`:
+For AI-driven quality checks during writing sessions, configure bito's MCP server in your project's `.mcp.json`:
 
 ```json
 {
   "mcpServers": {
-    "bito-lint": {
-      "command": "bito-lint",
+    "bito": {
+      "command": "bito",
       "args": ["serve"]
     }
   }
@@ -78,7 +78,7 @@ Set your preferred English dialect for spelling enforcement:
 dialect: en-us  # en-us | en-gb | en-ca | en-au
 ```
 
-Or via environment variable: `export BITO_LINT_DIALECT=en-us`
+Or via environment variable: `export BITO_DIALECT=en-us`
 
 When set, all skills check for dialect-consistent spelling in generated artifacts.
 
@@ -96,9 +96,9 @@ rules:
       tokens: { budget: 2000 }
       completeness: { template: handoff }
 
-  - paths: ["docs/decisions/*.md"]
+  - paths: ["record/decisions/*.md"]
     checks:
       completeness: { template: adr }
 ```
 
-See the [bito-lint documentation](https://github.com/claylo/bito-lint) for all configuration options.
+See the [bito documentation](https://github.com/claylo/bito) for all configuration options.

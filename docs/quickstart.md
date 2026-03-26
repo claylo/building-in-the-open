@@ -24,8 +24,8 @@ A handoff captures session state — decisions made, context gathered, work comp
 4. Verify locally:
 
    ```sh
-   bito-lint tokens .handoffs/2026-02-08-143000-my-session.md --budget 2000
-   bito-lint completeness .handoffs/2026-02-08-143000-my-session.md --template handoff
+   bito tokens .handoffs/2026-02-08-143000-my-session.md --budget 2000
+   bito completeness .handoffs/2026-02-08-143000-my-session.md --template handoff
    ```
 
 ## Your first ADR
@@ -42,15 +42,15 @@ Architecture Decision Records capture the *why* behind technical choices — con
 
    The `capturing-decisions` skill activates the **Technical Writer** persona: rigorous, opinionated, warm. The ADR follows MADR 4.0.0 format with explicit trade-offs.
 
-3. The skill writes the ADR to `docs/decisions/NNNN-<kebab-case-title>.md` and runs:
+3. The skill writes the ADR to `record/decisions/NNNN-<kebab-case-title>.md` and runs:
    - **Completeness** check against the ADR template (title, status, context, decision, consequences)
    - **Readability** check (target: grade level ≤ 12)
 
 4. Verify:
 
    ```sh
-   bito-lint completeness docs/decisions/0001-toml-for-configuration.md --template adr
-   bito-lint readability docs/decisions/0001-toml-for-configuration.md --max-grade 12
+   bito completeness record/decisions/0001-toml-for-configuration.md --template adr
+   bito readability record/decisions/0001-toml-for-configuration.md --max-grade 12
    ```
 
 ## The editorial review pipeline
@@ -64,7 +64,7 @@ The full draft-review-commit loop shows how the tone firewall works in practice.
    ```
 
 2. **Review** — The writing skill's final step triggers `editorial-review`, which runs:
-   - Deterministic checks (tokens, readability, completeness via bito-lint)
+   - Deterministic checks (tokens, readability, completeness via bito)
    - Agent-based review (conference-talk test, negative references, assumed context, tone consistency)
 
 3. **Iterate** — If the review finds issues, the writing skill revises. Deterministic failures are fixed automatically; agent-based issues are flagged for the writer to address.
@@ -72,7 +72,7 @@ The full draft-review-commit loop shows how the tone firewall works in practice.
 4. **Commit** — Once editorial review passes, the artifact is ready. The pre-commit hook provides a final safety net:
 
    ```sh
-   git add docs/designs/2026-02-08-authentication-system.md
+   git add record/designs/2026-02-08-authentication-system.md
    git commit -m "docs: add authentication system design document"
    ```
 
@@ -83,9 +83,9 @@ The full draft-review-commit loop shows how the tone firewall works in practice.
 Run quality gates on any artifact:
 
 ```sh
-bito-lint lint .handoffs/2026-02-08-143000-my-session.md
-bito-lint lint docs/decisions/0001-toml-for-configuration.md
-bito-lint lint docs/designs/2026-02-08-authentication-system.md
+bito lint .handoffs/2026-02-08-143000-my-session.md
+bito lint record/decisions/0001-toml-for-configuration.md
+bito lint record/designs/2026-02-08-authentication-system.md
 ```
 
 The `lint` subcommand matches the file path against rules in `.bito.yaml` and runs all applicable checks (tokens, completeness, readability) in one pass. See the [README](../README.md#quality-gates) for an example config.

@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# PostToolUse hook: run bito-lint quality gates when docs are written or edited.
+# PostToolUse hook: run bito quality gates when docs are written or edited.
 # Uses path-based rules from .bito.yaml — the config is the single source of truth.
 # Exit 0 = pass (silent). Exit 2 = fail (stderr fed back to Claude).
 
-if ! command -v bito-lint &>/dev/null; then
+if ! command -v bito &>/dev/null; then
     exit 0
 fi
 
@@ -26,8 +26,8 @@ case "$FILE_PATH" in
     *) exit 0 ;;
 esac
 
-# Let bito-lint rules handle the matching. No match = clean exit.
-OUTPUT=$(bito-lint lint "$FILE_PATH" 2>&1) || {
+# Let bito rules handle the matching. No match = clean exit.
+OUTPUT=$(bito lint "$FILE_PATH" 2>&1) || {
     echo "$OUTPUT" >&2
     exit 2
 }

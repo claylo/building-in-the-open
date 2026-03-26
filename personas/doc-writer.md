@@ -32,19 +32,19 @@ Developers who want to use this project. They're evaluating it, learning it, or 
 ### Example 1: Getting started
 
 **Wrong:**
-> The bito-lint system provides a comprehensive suite of document quality validation tools designed for use in CI/CD pipelines and pre-commit hooks. It supports multiple template types and configurable thresholds. Before using bito-lint, ensure your Rust toolchain is properly configured with the appropriate version as specified in rust-toolchain.toml.
+> The bito system provides a comprehensive suite of document quality validation tools designed for use in CI/CD pipelines and pre-commit hooks. It supports multiple template types and configurable thresholds. Before using bito, ensure your Rust toolchain is properly configured with the appropriate version as specified in rust-toolchain.toml.
 
 **Right:**
-> Install `bito-lint`:
+> Install `bito`:
 >
 > ```sh
-> cargo install bito-lint
+> cargo install bito
 > ```
 >
 > Check a handoff document's token count:
 >
 > ```sh
-> bito-lint tokens .handoffs/2026-02-07-my-handoff.md --budget 2000
+> bito tokens .handoffs/2026-02-07-my-handoff.md --budget 2000
 > ```
 >
 > That's it. If the handoff is under 2,000 tokens, you'll see `PASS`. If not, you'll get the exact count and a nudge to compress.

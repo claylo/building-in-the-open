@@ -30,7 +30,7 @@ Produce documentation that makes someone want to keep reading. End-user docs ans
 
 | Aspect | Guidance |
 |--------|----------|
-| **Persona** | Doc Writer (`personas/doc-writer.md`) |
+| **Persona** | Doc Writer (`../../personas/doc-writer.md`) |
 | **Output location** | Project-specific — typically `docs/` or a documentation site directory |
 | **Structure** | Progressive disclosure: getting started → common tasks → advanced → internals |
 | **Readability target** | Flesch-Kincaid grade ≤ 8 (initial estimate — calibrate against real docs) |
@@ -43,13 +43,13 @@ Produce documentation that makes someone want to keep reading. End-user docs ans
 Before writing anything, answer: "What is the user trying to accomplish?" Not "what did we build?" — that's the internal perspective. Frame the document around a task the user wants to complete.
 
 Good framing: "How do I check a handoff document's token count?"
-Bad framing: "The tokens subcommand of bito-lint."
+Bad framing: "The tokens subcommand of bito."
 
 ### Step 2: Load the persona
 
-Load the **Doc Writer** persona from `personas/doc-writer.md`.
+Load the **Doc Writer** persona from `../../personas/doc-writer.md`.
 
-**Dialect:** Check for `BITO_LINT_DIALECT` environment variable or the project's bito-lint config for a dialect preference (en-us, en-gb, en-ca, en-au). If set, use that dialect's spelling conventions consistently throughout the draft. If not set, default to en-US.
+**Dialect:** Check for `BITO_DIALECT` environment variable or the project's bito config for a dialect preference (en-us, en-gb, en-ca, en-au). If set, use that dialect's spelling conventions consistently throughout the draft. If not set, default to en-US.
 
 Key reminders:
 

@@ -31,7 +31,7 @@ Capture session context into two outputs: a **public handoff** (committed to the
 | Output | Location | Committed? | Tone firewall? | Token target |
 |--------|----------|-----------|----------------|-------------|
 | Public handoff | `.handoffs/YYYY-MM-DD-HHMMSS-<topic>.md` | Yes | Yes | < 2,000 |
-| Private memory | `PRIVATE_MEMORY.md` (project root) | No (gitignored) | No | No limit |
+| Private context | Journal tool, global rules location, or `PRIVATE_MEMORY.md` fallback | No | No | No limit |
 
 ## Process
 
@@ -44,25 +44,32 @@ Before writing, review:
 - What should the next person do first?
 - What will surprise or confuse someone who hasn't been staring at this code?
 
-### Step 2: Write the private memory
+### Step 2: Capture private context
 
-Write `PRIVATE_MEMORY.md` first. This is the unfiltered capture — motivations, frustrations, hunches, half-formed ideas, people dynamics. Don't self-censor. This file is gitignored and never reaches the repository.
+Capture your unfiltered private context first — before writing the public handoff. Don't self-censor. This never reaches the repository.
 
-If a `PRIVATE_MEMORY.md` already exists, append to it with a dated section header:
+**Use whatever private capture mechanism is already configured in this session:**
+- If a `private-journal` MCP tool is available, use it (preferred — centralized, dated)
+- If the user's global rules specify a journal location, use that
+- If neither is available, write or append to `PRIVATE_MEMORY.md` in the project root
+  (gitignored by convention — ensure `.gitignore` includes it)
 
-```markdown
-## 2026-02-07 — [brief topic]
+The mechanism matters less than the content. **Focus on what changes future behavior:**
+- User corrections and pushback — what was said, why, what to do differently
+- Approaches that worked well — what clicked, what to repeat
+- Platform/tooling gotchas that burned real time
+- Design principles articulated that aren't obvious from code
+- Motivations, frustrations, hunches about project direction
 
-[New private context here]
-```
+**Skip** technical implementation details already captured in code or commits.
 
 ### Step 3: Write the public handoff
 
-Load the **Context Curator** persona from `personas/context-curator.md` (public mode).
+Load the **Context Curator** persona from `../../personas/context-curator.md` (public mode).
 
-**Dialect:** Check for `BITO_LINT_DIALECT` environment variable or the project's bito-lint config for a dialect preference (en-us, en-gb, en-ca, en-au). If set, use that dialect's spelling conventions consistently throughout the draft. If not set, default to en-US.
+**Dialect:** Check for `BITO_DIALECT` environment variable or the project's bito config for a dialect preference (en-us, en-gb, en-ca, en-au). If set, use that dialect's spelling conventions consistently throughout the draft. If not set, default to en-US.
 
-Use the handoff template from `templates/handoff.md`. Fill every section:
+Use the handoff template from `../../templates/handoff.md`. Fill every section:
 
 1. **Where things stand** — Current state in 2-3 sentences. What works, what doesn't yet.
 2. **Decisions made** — Bulleted, with brief rationale or link to ADR.
@@ -100,7 +107,8 @@ Specifically check for:
 
 | Mistake | Fix |
 |---------|-----|
-| Writing the public handoff first and forgetting the private capture | Always write private first — it takes 2 minutes and preserves context you can't get back |
+| Writing the public handoff first and forgetting private context | Always capture private context first — use whatever mechanism is configured (journal tool, global rules location, or PRIVATE_MEMORY.md fallback) |
+| Logging implementation details in private context | Focus on what changes future behavior: corrections, wins, gotchas, design principles. The code already has the technical details. |
 | Vague next steps ("continue working on the feature") | Be specific: what file, what function, what's the first concrete action? |
 | Empty landmines section | If you can't name a landmine, you haven't thought about what will surprise the next reader |
 | Exceeding the token budget with narrative prose | Use the template structure. Bullets over paragraphs. Link to ADRs for rationale instead of inlining it. |
