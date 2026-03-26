@@ -6,7 +6,7 @@
     "name": "Clay Loveless",
     "email": "clay@loveless.net"
   },
-  "license": "(Apache-2.0 OR MIT)",
+  "license": "MIT",
   "homepage": "https://github.com/claylo/building-in-the-open",
   "repository": {
     "type": "git",

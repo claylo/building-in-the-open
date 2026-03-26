@@ -76,7 +76,7 @@ Use this mapping:
    - Frame the Context and Problem Statement as a question where possible.
    - Minimum two Considered Options. Three is ideal. Include options you rejected — future readers will ask "why didn't we just...?"
    - At least one "Good, because..." and one "Bad, because..." in Consequences. If you can't name a downside, you haven't thought hard enough about the trade-off.
-6. **Update `docs/decisions/README.md`**:
+6. **Update `record/decisions/README.md`**:
    - Add the ADR in numeric order.
    - Ensure the emoji matches the ADR's `status`.
 7. **Quality check.** Before saving, verify:

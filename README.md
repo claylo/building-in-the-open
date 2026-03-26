@@ -163,4 +163,4 @@ This project's own ADRs document the key design choices:
 
 ## License
 
-Apache-2.0 OR MIT
+MIT
