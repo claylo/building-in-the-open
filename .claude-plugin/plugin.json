@@ -1,7 +1,7 @@
 {
   "name": "building-in-the-open",
   "description": "Personas, skills, and quality gates for producing professional, self-contained development artifacts — from internal handoffs to end-user documentation",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "author": {
     "name": "Clay Loveless",
     "email": "clay@loveless.net"
@@ -17,5 +17,23 @@
     "editorial",
     "tone-firewall",
     "building-in-the-open"
-  ]
+  ],
+  "userConfig": {
+    "doc_output_dir": {
+      "description": "Directory for structured docs (ADRs, designs). Example: record, docs",
+      "sensitive": false
+    },
+    "dialect": {
+      "description": "English dialect for spelling enforcement (en-us, en-gb, en-ca, en-au)",
+      "sensitive": false
+    },
+    "max_grade": {
+      "description": "Maximum Flesch-Kincaid reading level (8=accessible, 10=moderate, 12=dense)",
+      "sensitive": false
+    },
+    "passive_max_percent": {
+      "description": "Maximum percentage of passive voice allowed (10=strict, 15=moderate, 25=relaxed)",
+      "sensitive": false
+    }
+  }
 }

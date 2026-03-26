@@ -43,7 +43,7 @@ For each change, note:
 
 ### Step 2: Write the CHANGELOG.md entry
 
-Load the **Technical Writer** persona from `../../personas/technical-writer.md`.
+Load the **Technical Writer** persona from `${CLAUDE_PLUGIN_ROOT}/personas/technical-writer.md`.
 
 **Dialect:** Check for `BITO_DIALECT` environment variable or the project's bito config for a dialect preference (en-us, en-gb, en-ca, en-au). If set, use that dialect's spelling conventions consistently throughout both the changelog entry and the release announcement. If not set, default to en-US.
 
@@ -72,7 +72,7 @@ Guidelines: group by user impact (not code), name the visible behavior, include 
 
 ### Step 3: Write the release announcement
 
-Load the **Marketing Copywriter** persona from `../../personas/marketing-copywriter.md`.
+Load the **Marketing Copywriter** persona from `${CLAUDE_PLUGIN_ROOT}/personas/marketing-copywriter.md`.
 
 Structure:
 

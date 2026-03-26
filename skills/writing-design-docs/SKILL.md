@@ -45,13 +45,13 @@ Then return here and continue with the Quick Reference and Process (Step 2 onwar
 
 ### Step 2: Load the persona and template
 
-Load the **Technical Writer** persona from `../../personas/technical-writer.md` and the design doc template from `../../templates/design-doc.md`.
+Load the **Technical Writer** persona from `${CLAUDE_PLUGIN_ROOT}/personas/technical-writer.md` and the design doc template from `${CLAUDE_PLUGIN_ROOT}/templates/design-doc.md`.
 
 **Dialect:** Check for `BITO_DIALECT` environment variable or the project's bito config for a dialect preference (en-us, en-gb, en-ca, en-au). If set, use that dialect's spelling conventions consistently throughout the draft. If not set, default to en-US.
 
 ### Step 3: Draft the document
 
-Write to `{PROJECT_ROOT}/record/designs/YYYY-MM-DD-<short-kebab-topic>.md`.
+Write to `{PROJECT_ROOT}/${user_config.doc_output_dir}/designs/YYYY-MM-DD-<short-kebab-topic>.md` (defaults to `record/` if not configured).
 
 Work through each section:
 

@@ -21,7 +21,7 @@ This is the entry point for the building-in-the-open plugin. If you know exactly
 | Write tutorials, guides, or API references for end users | `writing-end-user-docs` |
 | Produce CHANGELOG entries or release announcements | `writing-changelogs` |
 | Review an artifact before committing | `editorial-review` |
-| Set up quality gates for the first time | `onboarding` (guided interview) |
+| Set up quality gates for the first time | Automatic — `userConfig` prompts at plugin enable time, SessionStart hook scaffolds `.bito.yaml` |
 | Configure or troubleshoot bito | Continue below |
 
 ## bito Setup
@@ -194,7 +194,7 @@ Built-in completeness templates: `adr`, `handoff`, `design-doc`. Define custom t
 
 ## Personas and Skill Mapping
 
-Each persona is a voice guide in `../../personas/`. The same artifact type always gets the same voice.
+Each persona is a voice guide in `${CLAUDE_PLUGIN_ROOT}/personas/`. The same artifact type always gets the same voice.
 
 | Artifact | Skill | Persona | Persona file |
 |---|---|---|---|

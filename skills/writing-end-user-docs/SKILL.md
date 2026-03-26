@@ -14,7 +14,7 @@ license: MIT
 
 | Aspect | Guidance |
 |--------|----------|
-| **Persona** | Doc Writer (`../../personas/doc-writer.md`) |
+| **Persona** | Doc Writer (`${CLAUDE_PLUGIN_ROOT}/personas/doc-writer.md`) |
 | **Output location** | Project-specific — typically `docs/` or a documentation site directory |
 | **Structure** | Progressive disclosure: getting started → common tasks → advanced → internals |
 | **Readability target** | Flesch-Kincaid grade ≤ 8 (initial estimate — calibrate against real docs) |
@@ -28,7 +28,7 @@ Frame the document around a task: "How do I check a handoff's token count?" — 
 
 ### Step 2: Load the persona
 
-Load the **Doc Writer** persona from `../../personas/doc-writer.md`.
+Load the **Doc Writer** persona from `${CLAUDE_PLUGIN_ROOT}/personas/doc-writer.md`.
 
 **Dialect:** Check for `BITO_DIALECT` environment variable or the project's bito config for a dialect preference (en-us, en-gb, en-ca, en-au). If set, use that dialect's spelling conventions consistently throughout the draft. If not set, default to en-US.
 

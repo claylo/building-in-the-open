@@ -20,24 +20,24 @@ Primary reference: [Markdown Architectural Decision Records](https://adr.github.
 
 Injected at skill load time — use this to determine the next sequence number.
 
-!`ls record/decisions/[0-9]*.md 2>/dev/null || ls docs/decisions/[0-9]*.md 2>/dev/null || echo "(no existing ADRs found)"`
+!`ls ${user_config.doc_output_dir}/decisions/[0-9]*.md 2>/dev/null || ls record/decisions/[0-9]*.md 2>/dev/null || ls docs/decisions/[0-9]*.md 2>/dev/null || echo "(no existing ADRs found)"`
 
 ## Repository layout and naming
 
 All ADRs live in:
 
-- `{PROJECT_ROOT}/record/decisions/NNNN-title-with-dashes.md`
+- `{PROJECT_ROOT}/${user_config.doc_output_dir}/decisions/NNNN-title-with-dashes.md` (defaults to `record/` if not configured)
 
 Where:
 
 - `NNNN` is a **zero-padded 4-digit** sequence number (`0001`, `0002`, ...)
 - `title-with-dashes` is a **lowercase slug** (letters/digits/hyphens)
 
-If `{PROJECT_ROOT}/record/decisions/` does not exist yet, create it.
+If `{PROJECT_ROOT}/${user_config.doc_output_dir}/decisions/` does not exist yet, create it.
 
 ## Template
 
-Use the ADR template from `../../templates/adr.md`.
+Use the ADR template from `${CLAUDE_PLUGIN_ROOT}/templates/adr.md`.
 
 Create new ADRs by copying the template and replacing placeholders. Optional sections may be removed (the template marks them clearly).
 
@@ -50,7 +50,7 @@ Each ADR must include YAML front matter at the top with:
 
 ## Status emoji for the index
 
-Maintain an index at `{PROJECT_ROOT}/record/decisions/README.md` that lists **all** ADRs with:
+Maintain an index at `{PROJECT_ROOT}/${user_config.doc_output_dir}/decisions/README.md` that lists **all** ADRs with:
 
 - status emoji
 - ADR title (matching the H1 of the ADR), as a link to the full ADR
@@ -66,17 +66,17 @@ Use this mapping:
 
 ## Process
 
-1. **Pick the next number** by scanning existing ADR filenames in `{PROJECT_ROOT}/record/decisions/` and incrementing the highest `NNNN`. Start at `0001` if none exist.
+1. **Pick the next number** by scanning existing ADR filenames in `{PROJECT_ROOT}/${user_config.doc_output_dir}/decisions/` and incrementing the highest `NNNN`. Start at `0001` if none exist.
 2. **Slugify the title** into `title-with-dashes` (lowercase, hyphens, no punctuation).
-3. **Load the persona.** Load the **Technical Writer** persona from `../../personas/technical-writer.md`.
+3. **Load the persona.** Load the **Technical Writer** persona from `${CLAUDE_PLUGIN_ROOT}/personas/technical-writer.md`.
 4. **Check dialect.** Check for `BITO_DIALECT` environment variable or the project's bito config for a dialect preference (en-us, en-gb, en-ca, en-au). If set, use that dialect's spelling conventions consistently throughout the draft. If not set, default to en-US.
-5. **Create the ADR** from `../../templates/adr.md`.
+5. **Create the ADR** from `${CLAUDE_PLUGIN_ROOT}/templates/adr.md`.
    - Default `status` to `proposed` unless the change set includes implementation and agreement to accept.
    - Title format: `NNNN: [Problem solved and solution chosen]`. Good: "0007: Pluggable tokenizer backends for handoff budget enforcement." Bad: "0007: Token counting decision."
    - Frame the Context and Problem Statement as a question where possible.
    - Minimum two Considered Options. Three is ideal. Include options you rejected — future readers will ask "why didn't we just...?"
    - At least one "Good, because..." and one "Bad, because..." in Consequences. If you can't name a downside, you haven't thought hard enough about the trade-off.
-6. **Update `record/decisions/README.md`**:
+6. **Update `${user_config.doc_output_dir}/decisions/README.md`**:
    - Add the ADR in numeric order.
    - Ensure the emoji matches the ADR's `status`.
 7. **Quality check.** Before saving, verify:
