@@ -22,17 +22,17 @@ This is the tone firewall in practice — the enforcement mechanism behind ADR-0
 
 ## When NOT to Use
 
-- For `PRIVATE_MEMORY.md` — private context bypasses the firewall entirely. That's the point.
+- For any private context (journal entries, `PRIVATE_MEMORY.md`, private memory files) — private context bypasses the firewall entirely. That's the point.
 - As a writing tool — this skill reviews, it doesn't draft. Use the appropriate writing skill first.
 
 ## Quick Reference
 
 | Layer | Tool | What it checks | When it fails |
 |-------|------|----------------|---------------|
-| Deterministic | `bito-lint tokens` | Token count vs. budget | Handoffs over 2,000 tokens |
-| Deterministic | `bito-lint readability` | Flesch-Kincaid grade level | Above persona target (≤8 for Doc Writer, ≤12 for Technical Writer) |
-| Deterministic | `bito-lint completeness` | Required sections present and substantive | Missing or placeholder sections |
-| Agent-based | `agents/editorial-reviewer.md` | Conference-talk test, negative refs, assumed context, tone consistency | Any passage that would be uncomfortable on stage |
+| Deterministic | `bito tokens` | Token count vs. budget | Handoffs over 2,000 tokens |
+| Deterministic | `bito readability` | Flesch-Kincaid grade level | Above persona target (≤8 for Doc Writer, ≤12 for Technical Writer) |
+| Deterministic | `bito completeness` | Required sections present and substantive | Missing or placeholder sections |
+| Agent-based | `../../agents/editorial-reviewer.md` | Conference-talk test, negative refs, assumed context, tone consistency | Any passage that would be uncomfortable on stage |
 
 ## Process
 
@@ -45,9 +45,9 @@ Determine:
 
 ### Step 2: Run deterministic checks
 
-**Dialect:** Check for `BITO_LINT_DIALECT` environment variable or the project's bito-lint config for a dialect preference (en-us, en-gb, en-ca, en-au). If set, pass `--dialect <value>` to `bito-lint analyze` to enforce dialect-consistent spelling. The consistency checker will flag wrong-dialect spellings in addition to mixed usage.
+**Dialect:** Check for `BITO_DIALECT` environment variable or the project's bito config for a dialect preference (en-us, en-gb, en-ca, en-au). If set, pass `--dialect <value>` to `bito analyze` to enforce dialect-consistent spelling. The consistency checker will flag wrong-dialect spellings in addition to mixed usage.
 
-Run the applicable `bito-lint` checks. Not all checks apply to all artifact types.
+Run the applicable `bito` checks. Not all checks apply to all artifact types.
 
 | Artifact type | Token check | Readability check | Completeness check |
 |---------------|-------------|--------------------|--------------------|
@@ -62,20 +62,20 @@ Commands:
 
 ```sh
 # Token check (handoffs only)
-bito-lint tokens <file> --budget 2000
+bito tokens <file> --budget 2000
 
 # Readability check
-bito-lint readability <file> --max-grade <target>
+bito readability <file> --max-grade <target>
 
 # Completeness check
-bito-lint completeness <file> --template <type>
+bito completeness <file> --template <type>
 ```
 
 If any deterministic check fails, report the failure. The artifact should be revised before proceeding to agent review — no point checking tone on a document that's missing required sections.
 
 ### Step 3: Run agent-based review
 
-Load the editorial reviewer agent template from `agents/editorial-reviewer.md`. Fill the placeholders:
+Load the editorial reviewer agent template from `../../agents/editorial-reviewer.md`. Fill the placeholders:
 
 - `{ARTIFACT_CONTENT}` — the full text of the artifact
 - `{ARTIFACT_TYPE}` — from Step 1
@@ -145,8 +145,8 @@ Do not auto-fix agent review issues. The reviewer identifies problems and sugges
 ## Integration
 
 - **Called by:** Every other writing skill as its final step (`curating-context`, `capturing-decisions`, `writing-design-docs`, `writing-end-user-docs`, `writing-changelogs`)
-- **Also triggered by:** Pre-commit hook (`hooks/pre-commit-docs`) for manually-written or externally-modified docs
-- **Depends on:** `bito-lint` CLI (`cargo install bito-lint`) for deterministic checks, `agents/editorial-reviewer.md` for agent-based review
+- **Also triggered by:** Pre-commit hook (`../../hooks/pre-commit-docs`) for manually-written or externally-modified docs
+- **Depends on:** `bito` CLI (`cargo install bito`) for deterministic checks, `../../agents/editorial-reviewer.md` for agent-based review
 - **Enforces:** ADR-0002 (tone firewall on commit path), ADR-0003 (real tools for measurement, agents for judgment), ADR-0005 (token budget for handoffs)
 
 ## Common Mistakes

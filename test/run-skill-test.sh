@@ -4,10 +4,10 @@
 # Usage: bash test/run-skill-test.sh <scenario.md> [--model haiku] [--editorial]
 #
 # Parses the scenario's front matter, invokes the skill via Claude Code,
-# runs bito-lint quality checks on the output, and writes a JSON scorecard.
+# runs bito quality checks on the output, and writes a JSON scorecard.
 #
 # Environment:
-#   BITO_LINT          — path to bito-lint binary (default: bito-lint)
+#   BITO          — path to bito binary (default: bito)
 #   PLUGIN_DIR         — path to the plugin (default: repo root)
 
 set -euo pipefail
@@ -17,7 +17,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 PLUGIN_DIR="${PLUGIN_DIR:-$REPO_ROOT}"
-BITO_LINT="${BITO_LINT:-bito-lint}"
+BITO="${BITO:-bito}"
 MODEL="haiku"
 EDITORIAL=false
 SCENARIO_FILE=""
@@ -42,8 +42,8 @@ if [[ ! -f "$SCENARIO_FILE" ]]; then
   exit 1
 fi
 
-if ! command -v "$BITO_LINT" &>/dev/null; then
-  echo "Error: bito-lint not found. Install with: cargo install bito-lint" >&2
+if ! command -v "$BITO" &>/dev/null; then
+  echo "Error: bito not found. Install with: cargo install bito" >&2
   exit 1
 fi
 
@@ -132,7 +132,7 @@ Important instructions:
 - Write the artifact to the appropriate location in this project
 - Follow the skill's workflow exactly as documented in skills/$SKILL/SKILL.md
 - Use the persona voice from personas/$PERSONA.md
-- Run bito-lint quality checks as the skill requires
+- Run bito quality checks as the skill requires
 - Do NOT ask for confirmation — complete the full workflow autonomously"
 
 # --- Invoke Claude -----------------------------------------------------------
@@ -193,7 +193,7 @@ if [[ "$ARTIFACT_FOUND" == "true" && -n "$ARTIFACT_PATH" ]]; then
   # Completeness check
   if [[ -n "$COMPLETENESS_TEMPLATE" ]]; then
     echo "Checking completeness (template: $COMPLETENESS_TEMPLATE)..."
-    COMP_OUTPUT=$("$BITO_LINT" completeness "$ARTIFACT_PATH" --template "$COMPLETENESS_TEMPLATE" --json 2>&1) || true
+    COMP_OUTPUT=$("$BITO" completeness "$ARTIFACT_PATH" --template "$COMPLETENESS_TEMPLATE" --json 2>&1) || true
     COMP_PASS=$(echo "$COMP_OUTPUT" | jq -r '.pass // false')
     COMP_SECTIONS=$(echo "$COMP_OUTPUT" | jq -c '[.sections[] | select(.status == "missing") | .name] // []' 2>/dev/null || echo "[]")
     CHECKS=$(echo "$CHECKS" | jq --arg pass "$COMP_PASS" --argjson missing "$COMP_SECTIONS" \
@@ -203,7 +203,7 @@ if [[ "$ARTIFACT_FOUND" == "true" && -n "$ARTIFACT_PATH" ]]; then
   # Readability check
   if [[ -n "$READABILITY_MAX" ]]; then
     echo "Checking readability (max grade: $READABILITY_MAX)..."
-    READ_OUTPUT=$("$BITO_LINT" readability "$ARTIFACT_PATH" --max-grade "$READABILITY_MAX" --json 2>&1) || true
+    READ_OUTPUT=$("$BITO" readability "$ARTIFACT_PATH" --max-grade "$READABILITY_MAX" --json 2>&1) || true
     READ_GRADE=$(echo "$READ_OUTPUT" | jq -r '.grade // 0' 2>/dev/null || echo "0")
     OVER_MAX=$(echo "$READ_OUTPUT" | jq -r '.over_max // false' 2>/dev/null || echo "true")
     if [[ "$OVER_MAX" == "false" ]]; then
@@ -218,7 +218,7 @@ if [[ "$ARTIFACT_FOUND" == "true" && -n "$ARTIFACT_PATH" ]]; then
   # Token budget check
   if [[ -n "$TOKEN_BUDGET" ]]; then
     echo "Checking token budget ($TOKEN_BUDGET)..."
-    TOK_OUTPUT=$("$BITO_LINT" tokens "$ARTIFACT_PATH" --budget "$TOKEN_BUDGET" --json 2>&1) || true
+    TOK_OUTPUT=$("$BITO" tokens "$ARTIFACT_PATH" --budget "$TOKEN_BUDGET" --json 2>&1) || true
     TOK_COUNT=$(echo "$TOK_OUTPUT" | jq -r '.count // 0' 2>/dev/null || echo "0")
     OVER_BUDGET=$(echo "$TOK_OUTPUT" | jq -r '.over_budget // false' 2>/dev/null || echo "true")
     if [[ "$OVER_BUDGET" == "false" ]]; then
@@ -232,12 +232,12 @@ if [[ "$ARTIFACT_FOUND" == "true" && -n "$ARTIFACT_PATH" ]]; then
 
   # Consistency check (dialect)
   echo "Checking consistency..."
-  if CONS_OUTPUT=$("$BITO_LINT" analyze "$ARTIFACT_PATH" --checks consistency --json 2>&1); then
+  if CONS_OUTPUT=$("$BITO" analyze "$ARTIFACT_PATH" --checks consistency --json 2>&1); then
     CONS_ISSUES=$(echo "$CONS_OUTPUT" | jq -r '.consistency.total_issues // 0' 2>/dev/null || echo "0")
   else
     CONS_ISSUES=0
   fi
-  DIALECT="${BITO_LINT_DIALECT:-en-us}"
+  DIALECT="${BITO_DIALECT:-en-us}"
   CHECKS=$(echo "$CHECKS" | jq --arg issues "$CONS_ISSUES" --arg dialect "$DIALECT" \
     '. + {consistency: {issues: ($issues | tonumber), dialect: $dialect}}')
 

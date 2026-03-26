@@ -1,11 +1,11 @@
 ---
 name: onboarding
-description: Use when a user installs the building-in-the-open plugin for the first time, wants to configure quality gates for their writing, or asks how to set up bito-lint. Conducts a guided interview to discover writing standards and generates a .bito.yaml config.
+description: Use when a user installs the building-in-the-open plugin for the first time, wants to configure quality gates for their writing, or asks how to set up bito. Conducts a guided interview to discover writing standards and generates a .bito.yaml config.
 ---
 
 # Onboarding
 
-**Announce at start:** "I'm using the onboarding skill to set up your writing quality gates."
+**Announce at start:** "I'm using the **bito** onboarding skill to set up your writing quality gates."
 
 ## Overview
 
@@ -36,7 +36,7 @@ Before asking anything, look around:
 - Check for `CLAUDE.md` or `.claude/` project instructions
 - Check for a style guide (look in `docs/`, root, common names like `STYLE.md`, `CONTRIBUTING.md`)
 - Read 2–3 existing documentation files if they exist — get a feel for current voice and structure
-- Check `docs/decisions/`, `.handoffs/`, `docs/designs/` to see what artifact types are already in use
+- Check `record/decisions/`, `.handoffs/`, `record/designs/` to see what artifact types are already in use
 
 If existing config or docs exist, use them to pre-fill answers. Don't ask questions you can already answer from the project.
 
@@ -179,8 +179,8 @@ Once approved:
 ```
 
 4. **Suggest next steps:**
-   - "Run `bito-lint doctor` to verify the setup"
-   - "Try `bito-lint lint <file>` on an existing doc to see the gates in action"
+   - "Run `bito doctor` to verify the setup"
+   - "Try `bito lint <file>` on an existing doc to see the gates in action"
    - "The pre-commit hook at `hooks/pre-commit-docs` will enforce these on every commit"
 
 ## Key Principles

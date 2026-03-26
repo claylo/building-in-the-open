@@ -18,13 +18,13 @@ Initial public release.
 - **Superpowers-aware skill loading** — writing-design-docs conditionally loads with-superpowers or without-superpowers workflow based on available skills, avoiding context burn and preventing confusion when superpowers plugin isn't installed
 - **Editorial reviewer agent** template for tone firewall enforcement (agents/editorial-reviewer.md)
 - **3 document templates**: handoff (2,000-token budget), ADR (MADR 4.0.0 with optional section markers), design-doc
-- **Quality gate integration** with bito-lint CLI — path-based rules in `.bito.yaml` drive all checks (token counting, readability scoring, completeness validation, grammar)
-- **Dialect awareness** across all skills — checks `BITO_LINT_DIALECT` env var or project config for en-us, en-gb, en-ca, en-au spelling enforcement
-- **Plugin hooks** — SessionStart (bito-lint availability check), PostToolUse (real-time quality gates via `bito-lint lint`), UserPromptSubmit (suggests curating-context when `/handoff` appears in messages)
+- **Quality gate integration** with bito CLI — path-based rules in `.bito.yaml` drive all checks (token counting, readability scoring, completeness validation, grammar)
+- **Dialect awareness** across all skills — checks `BITO_DIALECT` env var or project config for en-us, en-gb, en-ca, en-au spelling enforcement
+- **Plugin hooks** — SessionStart (bito availability check), PostToolUse (real-time quality gates via `bito lint`), UserPromptSubmit (suggests curating-context when `/handoff` appears in messages)
 - **Pre-commit hook** (`hooks/pre-commit-docs`) for automated quality checks on staged documentation
 - **7 architecture decision records** documenting design choices (ADR-0001 through ADR-0007)
 - **Design document** with full plugin architecture specification
-- **Path-based lint rules** — `bito-lint lint <file>` runs all matching checks in one pass
+- **Path-based lint rules** — `bito lint <file>` runs all matching checks in one pass
 - Plugin metadata (`.claude-plugin/plugin.json`) for Claude Code plugin discovery
 - Dual license: Apache-2.0 OR MIT
 

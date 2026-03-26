@@ -1,6 +1,6 @@
 ---
 name: building-in-the-open
-description: Use when asked to write documentation, set up documentation tooling, configure quality gates, or when the request is ambiguous about which type of documentation to produce. Routes to the right writing skill and manages bito-lint configuration.
+description: Use when asked to write documentation, set up documentation tooling, configure quality gates, or when the request is ambiguous about which type of documentation to produce. Routes to the right writing skill and manages bito configuration.
 ---
 
 # Building in the Open
@@ -20,34 +20,34 @@ This is the entry point for the building-in-the-open plugin. If you know exactly
 | Produce CHANGELOG entries or release announcements | `writing-changelogs` |
 | Review an artifact before committing | `editorial-review` |
 | Set up quality gates for the first time | `onboarding` (guided interview) |
-| Configure or troubleshoot bito-lint | Continue below |
+| Configure or troubleshoot bito | Continue below |
 
-## bito-lint Setup
+## bito Setup
 
-bito-lint provides the deterministic quality gates (token counting, readability scoring, completeness checking) that every writing skill depends on. The plugin works without it — skills still produce artifacts — but quality gates won't run without bito-lint installed.
+bito provides the deterministic quality gates (token counting, readability scoring, completeness checking) that every writing skill depends on. The plugin works without it — skills still produce artifacts — but quality gates won't run without bito installed.
 
 ### Installation
 
 ```sh
-cargo binstall bito-lint          # pre-built binary, fastest
-brew install claylo/brew/bito-lint # macOS / Linux
-npm install -g @claylo/bito-lint   # wraps the native binary
+cargo binstall bito          # pre-built binary, fastest
+brew install claylo/brew/bito # macOS / Linux
+npm install -g @claylo/bito   # wraps the native binary
 ```
 
-Verify: `bito-lint doctor`
+Verify: `bito doctor`
 
 ### Configuration file
 
-bito-lint discovers config files by walking up from the current directory to the nearest `.git` boundary. Supported names: `.bito.yaml`, `.bito.toml`, `.bito.json` (also `.bito-lint.*` for backwards compatibility).
+bito discovers config files by walking up from the current directory to the nearest `.git` boundary. Supported names: `.bito.yaml`, `.bito.toml`, `.bito.json` (also `.bito-lint.*` for backwards compatibility).
 
 ```yaml
 # .bito.yaml — project-wide defaults (all fields optional)
 
 dialect: en-us            # en-us | en-gb | en-ca | en-au — spelling enforcement
-token_budget: 2000        # default budget for `bito-lint tokens`
-max_grade: 12.0           # default Flesch-Kincaid ceiling for `bito-lint readability`
-passive_max_percent: 15.0 # max passive voice % for `bito-lint grammar`
-style_min_score: 70       # min style score for `bito-lint analyze`
+token_budget: 2000        # default budget for `bito tokens`
+max_grade: 12.0           # default Flesch-Kincaid ceiling for `bito readability`
+passive_max_percent: 15.0 # max passive voice % for `bito grammar`
+style_min_score: 70       # min style score for `bito analyze`
 tokenizer: claude         # claude (conservative, overcounts ~4%) | openai (exact cl100k_base)
 
 # Custom completeness templates beyond the built-in adr, handoff, design-doc
@@ -58,14 +58,14 @@ templates:
 **Discovery order** (highest precedence first):
 1. `--config <path>` CLI flag
 2. `.bito.yaml` / `.bito.toml` / `.bito.json` (or `.bito-lint.*`) in current or ancestor directory (up to `.git` boundary)
-3. `~/.config/bito-lint/config.toml` (user-level defaults)
+3. `~/.config/bito/config.toml` (user-level defaults)
 
-**Environment variable overrides** — any field can be set via `BITO_LINT_` prefix:
+**Environment variable overrides** — any field can be set via `BITO_` prefix:
 
 ```sh
-BITO_LINT_DIALECT=en-gb
-BITO_LINT_TOKEN_BUDGET=3000
-BITO_LINT_TOKENIZER=openai
+BITO_DIALECT=en-gb
+BITO_TOKEN_BUDGET=3000
+BITO_TOKENIZER=openai
 ```
 
 ### Path-based rules
@@ -84,14 +84,14 @@ rules:
       grammar:
         passive_max: 15.0
 
-  - paths: ["docs/decisions/*.md"]
+  - paths: ["record/decisions/*.md"]
     checks:
       completeness:
         template: adr
       analyze:
         max_grade: 10.0
 
-  - paths: ["docs/designs/*.md"]
+  - paths: ["record/designs/*.md"]
     checks:
       completeness:
         template: design-doc
@@ -109,13 +109,13 @@ rules:
 **Rule resolution:**
 - All matching rules accumulate — a file matching two rules gets the union of their checks
 - When two rules configure the same check, the more specific pattern wins (specificity = number of literal path segments)
-- `docs/decisions/*.md` (2 literal segments) beats `docs/**/*.md` (1 literal)
+- `{PROJECT_ROOT}/record/decisions/*.md` (2 literal segments) beats `record/**/*.md` (1 literal)
 
-**Running rules:** Use `bito-lint lint <file>` to match a file against configured rules and run all resolved checks in one pass:
+**Running rules:** Use `bito lint <file>` to match a file against configured rules and run all resolved checks in one pass:
 
 ```sh
-bito-lint lint docs/decisions/0001-my-adr.md        # human-readable output
-bito-lint lint docs/decisions/0001-my-adr.md --json  # machine-readable
+bito lint record/decisions/0001-my-adr.md        # human-readable output
+bito lint record/decisions/0001-my-adr.md --json  # machine-readable
 ```
 
 No matching rule = clean exit (exit 0). Any failing threshold = exit 1.
@@ -135,31 +135,31 @@ No matching rule = clean exit (exit 0). Any failing threshold = exit 1.
 Suppress specific checks for sections that intentionally break rules:
 
 ```markdown
-<!-- bito-lint disable grammar -->
+<!-- bito disable grammar -->
 This section uses passive voice on purpose.
-<!-- bito-lint enable grammar -->
+<!-- bito enable grammar -->
 
-<!-- bito-lint disable-next-line readability -->
+<!-- bito disable-next-line readability -->
 This extraordinarily sesquipedalian sentence is intentional.
 
-<!-- bito-lint disable grammar,cliches -->
+<!-- bito disable grammar,cliches -->
 Multiple checks suppressed at once.
-<!-- bito-lint enable grammar,cliches -->
+<!-- bito enable grammar,cliches -->
 ```
 
 An unclosed `disable` suppresses for the rest of the file.
 
 ### MCP server
 
-For real-time quality feedback during writing sessions, configure bito-lint as an MCP server. This lets writing skills call quality gate tools directly without shelling out.
+For real-time quality feedback during writing sessions, configure bito as an MCP server. This lets writing skills call quality gate tools directly without shelling out.
 
 Add to your project's `.mcp.json`:
 
 ```json
 {
   "mcpServers": {
-    "bito-lint": {
-      "command": "bito-lint",
+    "bito": {
+      "command": "bito",
       "args": ["serve"]
     }
   }
@@ -170,23 +170,23 @@ The MCP server exposes: `count_tokens`, `check_readability`, `check_completeness
 
 ### Tokenizer backends
 
-bito-lint ships two tokenizer backends:
+bito ships two tokenizer backends:
 
 - **claude** (default) — Uses a 38K verified Claude vocabulary with greedy longest-match. Overcounts by ~4% on prose. Safe for budget enforcement: you'll never silently exceed a limit.
 - **openai** — Exact BPE encoding using cl100k_base (GPT-4/GPT-3.5 vocabulary). Use only when targeting OpenAI models.
 
-Set the backend via config (`tokenizer: claude`), env var (`BITO_LINT_TOKENIZER=openai`), or CLI flag (`--tokenizer openai`).
+Set the backend via config (`tokenizer: claude`), env var (`BITO_TOKENIZER=openai`), or CLI flag (`--tokenizer openai`).
 
 ## Quality Gate Quick Reference
 
 | Check | Command | What it measures |
 |---|---|---|
-| Lint (rules) | `bito-lint lint <file>` | Run all checks matching file path rules |
-| Token count | `bito-lint tokens <file> --budget 2000` | Tokens vs budget (handoffs) |
-| Readability | `bito-lint readability <file> --max-grade 12` | Flesch-Kincaid grade level |
-| Completeness | `bito-lint completeness <file> --template adr` | Required sections present |
-| Grammar | `bito-lint grammar <file>` | Passive voice, sentence issues |
-| Full analysis | `bito-lint analyze <file> --dialect en-us` | All checks + style score |
+| Lint (rules) | `bito lint <file>` | Run all checks matching file path rules |
+| Token count | `bito tokens <file> --budget 2000` | Tokens vs budget (handoffs) |
+| Readability | `bito readability <file> --max-grade 12` | Flesch-Kincaid grade level |
+| Completeness | `bito completeness <file> --template adr` | Required sections present |
+| Grammar | `bito grammar <file>` | Passive voice, sentence issues |
+| Full analysis | `bito analyze <file> --dialect en-us` | All checks + style score |
 
 Built-in completeness templates: `adr`, `handoff`, `design-doc`. Define custom templates in config.
 
@@ -194,10 +194,10 @@ Built-in completeness templates: `adr`, `handoff`, `design-doc`. Define custom t
 
 Every writing skill uses a persona to control voice. Personas are composable — the same artifact type always gets the same voice regardless of which agent writes it.
 
-- **Technical Writer** (`personas/technical-writer.md`) — ADRs, design docs, changelogs
-- **Context Curator** (`personas/context-curator.md`) — Handoffs
-- **Doc Writer** (`personas/doc-writer.md`) — End-user docs
-- **Marketing Copywriter** (`personas/marketing-copywriter.md`) — READMEs, release announcements
+- **Technical Writer** (`../../personas/technical-writer.md`) — ADRs, design docs, changelogs
+- **Context Curator** (`../../personas/context-curator.md`) — Handoffs
+- **Doc Writer** (`../../personas/doc-writer.md`) — End-user docs
+- **Marketing Copywriter** (`../../personas/marketing-copywriter.md`) — READMEs, release announcements
 
 ## Composing Skills and Personas
 
@@ -247,4 +247,4 @@ Or source it from an existing hook:
 source ~/.claude/plugins/building-in-the-open/hooks/pre-commit-docs
 ```
 
-With path-based rules configured, the pre-commit hook can use `bito-lint lint` instead of per-file check logic — the config becomes the single source of truth for what checks run where.
+With path-based rules configured, the pre-commit hook can use `bito lint` instead of per-file check logic — the config becomes the single source of truth for what checks run where.

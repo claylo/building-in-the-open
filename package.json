@@ -1,0 +1,29 @@
+{
+  "name": "@claylo/building-in-the-open",
+  "version": "1.0.1",
+  "description": "Personas, skills, and quality gates for producing professional, self-contained development artifacts",
+  "author": {
+    "name": "Clay Loveless",
+    "email": "clay@loveless.net"
+  },
+  "license": "(Apache-2.0 OR MIT)",
+  "homepage": "https://github.com/claylo/building-in-the-open",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/claylo/building-in-the-open.git"
+  },
+  "keywords": [
+    "claude-code",
+    "mcp",
+    "documentation",
+    "personas",
+    "adrs",
+    "handoffs",
+    "editorial",
+    "tone-firewall",
+    "building-in-the-open"
+  ],
+  "dependencies": {
+    "@claylo/bito": "^1.0.0"
+  }
+}

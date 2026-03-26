@@ -41,8 +41,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
 
-      - name: Install bito-lint
-        run: cargo bininstall bito-lint
+      - name: Install bito
+        run: cargo bininstall bito
         env:
           CARGO_TERM_COLOR: always
 

@@ -11,7 +11,7 @@
 
 ## Step 1: Gather source material
 
-Locate the brainstorming output from the `superpowers:brainstorming` session (typically in `docs/plans/` or the conversation itself). Identify:
+Locate the brainstorming output from the `superpowers:brainstorming` session (typically in `docs/superpowers/plans/`, `record/superpowers/plans/` or the conversation itself). Identify:
 
 - The chosen approach
 - Alternatives that were discussed and rejected

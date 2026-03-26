@@ -17,18 +17,18 @@ Primary reference: [Markdown Architectural Decision Records](https://adr.github.
 
 All ADRs live in:
 
-- `docs/decisions/NNNN-title-with-dashes.md`
+- `{PROJECT_ROOT}/record/decisions/NNNN-title-with-dashes.md`
 
 Where:
 
 - `NNNN` is a **zero-padded 4-digit** sequence number (`0001`, `0002`, ...)
 - `title-with-dashes` is a **lowercase slug** (letters/digits/hyphens)
 
-If `docs/decisions/` does not exist yet, create it.
+If `{PROJECT_ROOT}/record/decisions/` does not exist yet, create it.
 
 ## Template
 
-Use the ADR template from `templates/adr.md`.
+Use the ADR template from `../../templates/adr.md`.
 
 Create new ADRs by copying the template and replacing placeholders. Optional sections may be removed (the template marks them clearly).
 
@@ -41,7 +41,7 @@ Each ADR must include YAML front matter at the top with:
 
 ## Status emoji for the index
 
-Maintain an index at `docs/decisions/README.md` that lists **all** ADRs with:
+Maintain an index at `{PROJECT_ROOT}/record/decisions/README.md` that lists **all** ADRs with:
 
 - status emoji
 - ADR title (matching the H1 of the ADR), as a link to the full ADR
@@ -57,11 +57,11 @@ Use this mapping:
 
 ## Process
 
-1. **Pick the next number** by scanning existing ADR filenames in `docs/decisions/` and incrementing the highest `NNNN`. Start at `0001` if none exist.
+1. **Pick the next number** by scanning existing ADR filenames in `{PROJECT_ROOT}/record/decisions/` and incrementing the highest `NNNN`. Start at `0001` if none exist.
 2. **Slugify the title** into `title-with-dashes` (lowercase, hyphens, no punctuation).
-3. **Load the persona.** Load the **Technical Writer** persona from `personas/technical-writer.md`.
-4. **Check dialect.** Check for `BITO_LINT_DIALECT` environment variable or the project's bito-lint config for a dialect preference (en-us, en-gb, en-ca, en-au). If set, use that dialect's spelling conventions consistently throughout the draft. If not set, default to en-US.
-5. **Create the ADR** from `templates/adr.md`.
+3. **Load the persona.** Load the **Technical Writer** persona from `../../personas/technical-writer.md`.
+4. **Check dialect.** Check for `BITO_DIALECT` environment variable or the project's bito config for a dialect preference (en-us, en-gb, en-ca, en-au). If set, use that dialect's spelling conventions consistently throughout the draft. If not set, default to en-US.
+5. **Create the ADR** from `../../templates/adr.md`.
    - Default `status` to `proposed` unless the change set includes implementation and agreement to accept.
    - Title format: `NNNN: [Problem solved and solution chosen]`. Good: "0007: Pluggable tokenizer backends for handoff budget enforcement." Bad: "0007: Token counting decision."
    - Frame the Context and Problem Statement as a question where possible.

@@ -16,7 +16,7 @@
 #   test/scorecards/suite-<timestamp>.md      Human-readable summary
 #
 # Environment:
-#   BITO_LINT          — path to bito-lint binary (default: bito-lint)
+#   BITO          — path to bito binary (default: bito)
 
 set -euo pipefail
 

@@ -6,11 +6,11 @@ This directory contains both Claude Code plugin hooks and a git pre-commit hook.
 
 Registered automatically when the plugin is installed.
 
-### SessionStart — `check-bito-lint.sh`
+### SessionStart — `check-bito.sh`
 
-Checks whether `bito-lint` is on PATH. If missing, injects install instructions into Claude's context.
+Checks whether `bito` is on PATH. If missing, injects install instructions into Claude's context.
 
-With bito-lint v0.3+, also announces available custom content entries (writer personas) from `.bito.yaml`. Skills can load a persona on demand via `bito-lint custom show <name> --config .bito.yaml`. The four personas registered are:
+With bito v0.3+, also announces available custom content entries (writer personas) from `.bito.yaml`. Skills can load a persona on demand via `bito custom show <name> --config .bito.yaml`. The four personas registered are:
 
 | Entry | Persona | Used by |
 |-------|---------|---------|
@@ -21,11 +21,11 @@ With bito-lint v0.3+, also announces available custom content entries (writer pe
 
 ### PostToolUse (Write|Edit) — `check-docs-on-write.sh`
 
-Runs `bito-lint lint` on any markdown file Claude writes or edits. The lint command matches the file path against rules in `.bito.yaml` and runs all applicable checks in one pass. No match = silent pass.
+Runs `bito lint` on any markdown file Claude writes or edits. The lint command matches the file path against rules in `.bito.yaml` and runs all applicable checks in one pass. No match = silent pass.
 
 On failure, stderr is fed back to Claude so it can fix the issue automatically.
 
-Individual checks are fast (~10–100ms on Apple M3 Max). A `bito-lint lint` pass typically adds under 150ms to a Write.
+Individual checks are fast (~10–100ms on Apple M3 Max). A `bito lint` pass typically adds under 150ms to a Write.
 
 ## Git hook — `pre-commit-docs`
 

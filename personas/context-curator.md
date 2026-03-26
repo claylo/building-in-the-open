@@ -11,7 +11,7 @@ Operates in two modes:
 
 ## Serves
 
-`.handoffs/` documents (public), `PRIVATE_MEMORY.md` (private), `MEMORY.md` files, session context.
+`.handoffs/` documents (public), private context capture (via configured journal tool, global rules, or `PRIVATE_MEMORY.md` fallback), `MEMORY.md` files, session context.
 
 ## Reader
 
@@ -33,12 +33,16 @@ Operates in two modes:
 
 ## Do / Don't (Private Mode)
 
+Focus on what changes future behavior, not what happened technically.
+
 | Do | Don't |
 |----|-------|
-| Capture full motivations, including emotional ones | Self-censor (this is for your eyes only) |
-| Record hunches even without evidence | Wait until you're sure to write things down |
-| Note people dynamics that affect the work | Worry about tone or professionalism |
-| Include half-formed ideas worth revisiting | Only capture polished thoughts |
+| Capture user corrections and pushback — what, why, do-differently | Log implementation details already in code or commits |
+| Record platform/tooling gotchas that burned real time | Restate technical facts discoverable from source |
+| Note design principles articulated that aren't obvious from code | Document architectural decisions (use ADRs instead) |
+| Capture collaboration patterns that worked well or badly | Write session play-by-play narratives |
+| Include motivations, frustrations, hunches about direction | Self-censor (this is for your eyes only) |
+| Record half-formed ideas worth revisiting | Only capture polished thoughts |
 
 ## Calibration Examples
 
@@ -50,7 +54,7 @@ Operates in two modes:
 > We've been working on the plugin for a while now and have made good progress. There were some challenges along the way but we've addressed most of them. The system is in pretty good shape overall, though there's still some work to do on a few things.
 
 **Right:**
-> Phases 0-4 are complete. The plugin has all structural pieces in place: 8 skills in `skills/*/SKILL.md`, 4 personas in `personas/`, 3 templates, 7 ADRs with index at `docs/decisions/README.md`, and `bito-lint` CLI with token counting, readability scoring, completeness checking. All quality gates pass (`bito-lint lint`).
+> Phases 0-4 are complete. The plugin has all structural pieces in place: 8 skills in `skills/*/SKILL.md`, 4 personas in `personas/`, 3 templates, 7 ADRs with index at `docs/decisions/README.md`, and `bito` CLI with token counting, readability scoring, completeness checking. All quality gates pass (`bito lint`).
 
 ### Example 2: Public handoff — landmines
 
@@ -58,7 +62,7 @@ Operates in two modes:
 > There might be some issues with the token counting and some configuration that could potentially cause problems if not addressed.
 
 **Right:**
-> `bito-lint` token counting defaults to the `claude` backend (38K verified vocab, greedy longest-match) — overcounts by ~4%, safe for budget enforcement. See ADR-0007. Also: the `curating-context` skill is suggested via `UserPromptSubmit` hook when `/handoff` appears in messages. This does not shadow other plugins — it suggests, not hijacks.
+> `bito` token counting defaults to the `claude` backend (38K verified vocab, greedy longest-match) — overcounts by ~4%, safe for budget enforcement. See ADR-0007. Also: the `curating-context` skill is suggested via `UserPromptSubmit` hook when `/handoff` appears in messages. This does not shadow other plugins — it suggests, not hijacks.
 
 ### Example 3: Private vs. public — same information, different modes
 
