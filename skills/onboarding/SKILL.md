@@ -1,15 +1,13 @@
 ---
 name: onboarding
-description: Use when a user installs the building-in-the-open plugin for the first time, wants to configure quality gates for their writing, or asks how to set up bito. Conducts a guided interview to discover writing standards and generates a .bito.yaml config.
+description: Conducts a guided interview to discover writing standards, voice preferences, and document types, then generates a .bito.yaml config that enforces those standards automatically. Use when setting up quality gates for the first time, configuring bito, or when a user asks how to get started with documentation standards.
+allowed-tools: Read, Bash(bito *)
+license: MIT
 ---
 
 # Onboarding
 
 **Announce at start:** "I'm using the **bito** onboarding skill to set up your writing quality gates."
-
-## Overview
-
-Discover a writer's standards, voice, and document types through a guided interview, then generate a `.bito.yaml` config that enforces those standards automatically. The interview replaces the manual work of reading config docs and guessing at thresholds — you answer questions about how you write, and the config writes itself.
 
 <HARD-GATE>
 Do NOT generate the config file until you have completed the interview and the user has approved the draft. Skipping questions leads to wrong thresholds, and wrong thresholds lead to the config being deleted. Get it right.
@@ -40,101 +38,13 @@ Before asking anything, look around:
 
 If existing config or docs exist, use them to pre-fill answers. Don't ask questions you can already answer from the project.
 
-### Phase 2: Discover writer and audience
+### Phases 2-4: Interview
 
-Ask **one question at a time.** Prefer multiple choice when possible.
+Load the interview questions from [references/interview-questions.md](references/interview-questions.md). Ask one question at a time, prefer multiple choice, and pre-fill from Phase 1 context. The questions cover:
 
-**Question 1 — What kind of writing?**
-
-> What kind of writing do you primarily produce with this project?
->
-> a) **Technical docs** — ADRs, design docs, internal knowledge (developer audience)
-> b) **User guides** — tutorials, how-tos, API references (end-user audience)
-> c) **Marketing content** — READMEs, announcements, landing pages
-> d) **Mixed** — some combination of the above
-
-**Question 2 — Who reads it?**
-
-> Who's your primary reader?
->
-> a) **Developers** — comfortable with code, jargon is fine
-> b) **Technical users** — power users who aren't developers
-> c) **General audience** — no assumed technical background
-> d) **Mixed** — different docs for different readers
-
-**Question 3 — Reading level**
-
-Based on their answers, propose a readability target with context:
-
-> Based on what you've told me, I'd suggest a readability target of **grade [N]**. For reference:
->
-> - **Grade 8** — Clear and accessible. What newspapers aim for. Good for user guides and end-user docs.
-> - **Grade 10** — Moderate complexity. Good for technical content aimed at a broad technical audience.
-> - **Grade 12** — Dense but readable. Good for ADRs and design docs where precision matters.
-> - **No limit** — You care about accuracy more than readability scoring.
->
-> Does grade [N] sound right, or would you adjust it?
-
-### Phase 3: Discover standards
-
-**Question 4 — Dialect**
-
-> Which English dialect should we enforce for spelling?
->
-> a) **American English** (en-us) — color, organize, center
-> b) **British English** (en-gb) — colour, organise, centre
-> c) **Canadian English** (en-ca) — colour, organize, centre
-> d) **Australian English** (en-au) — colour, organise, centre
-
-**Question 5 — Passive voice**
-
-> How strict should we be about passive voice?
->
-> a) **Strict** (max 10%) — Almost never. Active voice everywhere.
-> b) **Moderate** (max 15%) — Some passive is fine when the actor doesn't matter.
-> c) **Relaxed** (max 25%) — Passive voice isn't a problem in your domain.
-> d) **Don't check** — You have other ways of handling this.
-
-**Question 6 — Style guide** (if not found in Phase 1)
-
-> Do you have an existing style guide or set of writing conventions? If so, point me to it — I'll read it and extract the rules I can enforce. If not, no worries — we'll build from the answers you've already given.
-
-If they provide a style guide, read it and extract:
-- Heading conventions (sentence case vs title case)
-- List formatting preferences
-- Terminology requirements or bans
-- UI text formatting rules
-- Any other enforceable patterns
-
-Present what you extracted and confirm: "Here's what I pulled from your style guide — did I miss anything?"
-
-### Phase 4: Discover document types
-
-**Question 7 — What do you produce?**
-
-> What types of documents does this project need? Pick all that apply:
->
-> a) **Handoffs** — session context for the next person/agent
-> b) **ADRs** — architecture decision records
-> c) **Design docs** — narrative context for architectural work
-> d) **User guides** — tutorials, how-tos, getting-started
-> e) **Changelogs** — release notes for users
-> f) **READMEs** — project introduction and onboarding
-> g) **Other** — describe what you need
-
-**For each selected type, ask:**
-
-> Where do [type] docs live in your repo? (e.g., `.handoffs/*.md`, `docs/guides/*.md`)
-
-And if applicable:
-
-> Are there required sections for [type] docs? (e.g., every ADR must have Context, Decision, Consequences)
-
-Use built-in templates (`adr`, `handoff`, `design-doc`) where they match. For custom types, build a custom completeness template from their answers.
-
-**Question 8 — Token budgets**
-
-> Do any document types have a length constraint? Handoffs, for example, work well under 2,000 tokens — short enough to load into a fresh session without eating context. Any others?
+- **Phase 2:** Writing type, audience, reading level (Questions 1-3)
+- **Phase 3:** Dialect, passive voice, style guide (Questions 4-6)
+- **Phase 4:** Document types, paths, required sections, token budgets (Questions 7-8)
 
 ### Phase 5: Present draft config
 
@@ -185,9 +95,7 @@ Once approved:
 
 ## Key Principles
 
-- **One question at a time** — Don't overwhelm. Writers aren't configuring a build system, they're describing how they write.
-- **Multiple choice preferred** — Easier to answer, faster to converge.
-- **Pre-fill from context** — If you can answer a question from existing files, don't ask it. Tell them what you found and confirm.
-- **Explain the "why"** — When suggesting a threshold, say why. "Grade 8 because your readers are non-technical" builds trust. A bare number doesn't.
-- **The config is the artifact** — This skill produces a file, not a conversation. The interview is the means, the `.bito.yaml` is the end.
-- **Iterate, don't guess** — Wrong thresholds get the config deleted. It's faster to ask one more question than to debug a config that's rejecting good writing.
+- **One question at a time.** Pre-fill from context — don't ask what you can already answer.
+- **Explain the "why"** behind each threshold suggestion.
+- **The config is the artifact.** The interview is the means, the `.bito.yaml` is the end.
+- **Iterate, don't guess.** Wrong thresholds get the config deleted.

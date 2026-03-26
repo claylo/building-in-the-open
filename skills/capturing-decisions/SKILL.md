@@ -1,6 +1,9 @@
 ---
 name: capturing-decisions
-description: Create and maintain MADR-format Architectural Decision Records in Markdown under `docs/decisions`. Use when a technical decision has been made, after brainstorming converges on an approach, or when a decision was made implicitly and should be captured explicitly.
+description: Creates and maintains MADR-format Architectural Decision Records with explicit trade-offs, considered alternatives, and consequence analysis. Use when a technical decision has been made, after brainstorming converges on an approach, when writing an ADR or architecture decision record, or when an implicit decision should be captured explicitly.
+argument-hint: "[decision-summary]"
+allowed-tools: Read, Bash(bito *)
+license: MIT
 ---
 
 # Capturing Decisions
@@ -12,6 +15,12 @@ This skill creates (and keeps tidy) **Architectural Decision Records (ADRs)** us
 A helpful bar for what "counts" as an *architectural decision* is Martin Fowler's: **"a decision you wish you could get right early."** (["Who needs an architect?"](https://web.archive.org/web/20231221064723/https://ieeexplore.ieee.org/document/1231144?arnumber=1231144), IEEE Software, 2003)
 
 Primary reference: [Markdown Architectural Decision Records](https://adr.github.io/madr/)
+
+## Existing ADRs
+
+Injected at skill load time — use this to determine the next sequence number.
+
+!`ls record/decisions/[0-9]*.md 2>/dev/null || ls docs/decisions/[0-9]*.md 2>/dev/null || echo "(no existing ADRs found)"`
 
 ## Repository layout and naming
 
