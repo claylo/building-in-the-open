@@ -54,7 +54,7 @@ Focus on what changes future behavior, not what happened technically.
 > We've been working on the plugin for a while now and have made good progress. There were some challenges along the way but we've addressed most of them. The system is in pretty good shape overall, though there's still some work to do on a few things.
 
 **Right:**
-> Phases 0-4 are complete. The plugin has all structural pieces in place: 8 skills in `skills/*/SKILL.md`, 4 personas in `personas/`, 3 templates, 7 ADRs with index at `docs/decisions/README.md`, and `bito` CLI with token counting, readability scoring, completeness checking. All quality gates pass (`bito lint`).
+> Phases 0-4 are complete. The plugin has all structural pieces in place: 8 skills in `skills/*/SKILL.md`, 4 personas in `personas/`, 3 templates, 7 ADRs with index at `record/decisions/README.md`, and `bito` CLI with token counting, readability scoring, completeness checking. All quality gates pass (`bito lint`).
 
 ### Example 2: Public handoff — landmines
 

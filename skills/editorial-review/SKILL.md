@@ -1,6 +1,11 @@
 ---
 name: editorial-review
-description: Use before committing any documentation artifact to the repository. The tone firewall skill — coordinates deterministic quality gates (token count, readability, completeness) with agent-based editorial judgment (conference-talk test, tone consistency, assumed context).
+description: Runs deterministic quality gates (token count, readability, completeness via bito) and agent-based editorial judgment (conference-talk test, tone drift, assumed context) on documentation artifacts. Use before committing docs, when reviewing written artifacts for quality or tone, when checking if documentation is ready to ship, or as the final gate in any writing skill's workflow.
+argument-hint: "[file-path]"
+context: fork
+agent: editorial-reviewer
+allowed-tools: Read, Bash(bito *)
+license: MIT
 ---
 
 # Editorial Review

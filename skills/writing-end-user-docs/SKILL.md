@@ -1,30 +1,14 @@
 ---
 name: writing-end-user-docs
-description: Use when a feature is stable enough to document for end users, when creating tutorials or guides, when writing API references, or for docs-driven development where the documentation is written before or alongside implementation.
+description: Generates tutorials, how-to guides, getting-started content, and API references using the Doc Writer persona — example-first, progressive disclosure, copy-paste ready. Use when writing docs for end users, creating a guide or tutorial, documenting a stable feature, writing API references, or for docs-driven development.
+argument-hint: "[feature-or-topic]"
+allowed-tools: Read, Bash(bito *)
+license: MIT
 ---
 
 # Writing End-User Docs
 
 **Announce at start:** "I'm using the writing-end-user-docs skill with the Doc Writer persona."
-
-## Overview
-
-Produce documentation that makes someone want to keep reading. End-user docs answer "how do I...?" — not "what does this module do?" They start from the user's goal, not the codebase's structure. This skill uses the Doc Writer persona to produce tutorials, guides, API references, and getting-started content.
-
-## When to Use
-
-- After a feature is stable enough that users can try it
-- For docs-driven development — writing the docs first clarifies what the feature should feel like
-- When creating a getting-started guide for the project
-- When an API reference needs examples showing real usage, not just signatures
-- When user feedback reveals that existing docs aren't answering the right questions
-
-## When NOT to Use
-
-- For internal architectural documentation — use `writing-design-docs`
-- For capturing session context — use `curating-context`
-- For recording decisions — use `capturing-decisions`
-- For README introductions or release announcements — use `writing-changelogs` (Marketing Copywriter persona)
 
 ## Quick Reference
 
@@ -40,10 +24,7 @@ Produce documentation that makes someone want to keep reading. End-user docs ans
 
 ### Step 1: Identify the user's goal
 
-Before writing anything, answer: "What is the user trying to accomplish?" Not "what did we build?" — that's the internal perspective. Frame the document around a task the user wants to complete.
-
-Good framing: "How do I check a handoff document's token count?"
-Bad framing: "The tokens subcommand of bito."
+Frame the document around a task: "How do I check a handoff's token count?" — not "The tokens subcommand of bito."
 
 ### Step 2: Load the persona
 
@@ -70,29 +51,27 @@ Key reminders:
 
 ### Step 4: Draft with progressive disclosure
 
-Structure content so the reader can stop at any level and have something useful:
+Each level should feel complete on its own:
 
-1. **Level 1 — Getting started.** Install and run the first command. Under 5 minutes to "hello world."
-2. **Level 2 — Common tasks.** The things 80% of users do 80% of the time. Recipes they can copy-paste.
-3. **Level 3 — Advanced usage.** Configuration, customization, integration with other tools.
-4. **Level 4 — Internals.** How it works under the hood. Only for the curious or the contributing.
-
-Each level should feel complete on its own. A user who reads only Level 1 should walk away with a working setup. A user who reads through Level 3 should feel like a power user.
+1. **Getting started** — Install + first command. Under 5 minutes to "hello world."
+2. **Common tasks** — 80/20 recipes. Copy-pasteable.
+3. **Advanced usage** — Configuration, customization, integration.
+4. **Internals** — How it works. Only for the curious.
 
 ### Step 5: Write concrete examples
 
-Every claim about what the tool does must include a runnable example or copy-pasteable command. The examples are the documentation — the prose around them is connective tissue.
+Every claim about what the tool does must include a runnable example. The examples are the documentation — the prose around them is connective tissue.
 
 For CLI tools:
-```
-command with real arguments
-expected output
+```sh
+bito tokens .handoffs/2026-02-08-my-handoff.md --budget 2000
+# PASS — 1,847 tokens (budget: 2,000)
 ```
 
-For libraries:
-```
-minimal working code
-what it produces
+For config-driven checks:
+```sh
+bito lint record/decisions/0001-my-adr.md
+# Runs completeness + readability checks from .bito.yaml rules
 ```
 
 ### Step 6: Quality check
@@ -122,9 +101,8 @@ Run through `editorial-review` if available. The Doc Writer voice should be cons
 
 | Mistake | Fix |
 |---------|-----|
-| Starting with architecture or history instead of a working example | Lead with what the user can *do*, not what you *built*. The first code block should appear within the first 10 lines. |
-| Using "simply" or "just" before a multi-step process | If it requires more than one action, it isn't simple. Drop the word and let the steps speak for themselves. |
-| Documenting the API surface without showing usage | Every function/command/endpoint needs at least one example showing a real use case, not just parameter descriptions. |
-| Front-loading caveats and edge cases | Put caveats after the happy path. The reader needs to succeed before they need to handle failure. |
-| Writing for the developer who built it, not the user who found it | Read the document as if you've never seen this codebase. Would you know what to do first? |
-| Assuming the reader has read other project docs | Each document should stand alone or explicitly link to prerequisites. "See the getting started guide" with a link — not "as described elsewhere." |
+| Leading with architecture or history | First code block within 10 lines. Lead with what the user can *do*. |
+| "Simply" or "just" before multi-step process | Drop the word. If it's more than one action, it isn't simple. |
+| API docs without usage examples | Every function/command needs a runnable example, not just parameter descriptions. |
+| Front-loading caveats | Happy path first. Caveats after the reader succeeds. |
+| Assuming reader has read other docs | Stand alone or link explicitly. No "as described elsewhere." |

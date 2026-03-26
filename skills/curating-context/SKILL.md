@@ -1,6 +1,9 @@
 ---
 name: curating-context
-description: Use when ending a work session, switching focus areas, reaching a decision point, or when context needs to be preserved for the next agent or human. Produces both a public handoff document and private memory capture.
+description: Produces a public handoff document (committed, tone-firewalled, token-budgeted) and captures private context for future sessions. Use when wrapping up a session, switching focus, handing off to another agent or person, saving progress before context is lost, or when someone says "let's write a handoff".
+argument-hint: "[topic]"
+allowed-tools: Read, Bash(bito *)
+license: MIT
 ---
 
 # Curating Context
@@ -30,14 +33,32 @@ Capture session context into two outputs: a **public handoff** (committed to the
 
 | Output | Location | Committed? | Tone firewall? | Token target |
 |--------|----------|-----------|----------------|-------------|
-| Public handoff | `.handoffs/YYYY-MM-DD-HHMMSS-<topic>.md` | Yes | Yes | < 2,000 |
+| Public handoff | `.handoffs/YYYY-MM-DD-HHMM-<topic>.md` | Yes | Yes | < 2,000 |
 | Private context | Journal tool, global rules location, or `PRIVATE_MEMORY.md` fallback | No | No | No limit |
+
+## Session Snapshot
+
+The following is injected at skill load time — no tool calls needed.
+
+**Branch:** !`git branch --show-current 2>/dev/null || echo "(not a git repo)"`
+
+**Recent commits:**
+!`git log --oneline -15 2>/dev/null || echo "(no git history)"`
+
+**Working tree:**
+!`git status --short 2>/dev/null || echo "(clean)"`
+
+**Staged/unstaged diff summary:**
+!`git diff --stat HEAD 2>/dev/null`
+
+**Existing handoffs:**
+!`ls -t .handoffs/*.md 2>/dev/null | head -5 || echo "(none)"`
 
 ## Process
 
 ### Step 1: Gather context
 
-Before writing, review:
+Use the session snapshot above as your starting point. Then review:
 - What was accomplished this session?
 - What decisions were made, and why?
 - What's the current state of the codebase? (tests passing? broken? in-progress?)

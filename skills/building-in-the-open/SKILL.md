@@ -1,6 +1,8 @@
 ---
 name: building-in-the-open
-description: Use when asked to write documentation, set up documentation tooling, configure quality gates, or when the request is ambiguous about which type of documentation to produce. Routes to the right writing skill and manages bito configuration.
+description: Routes documentation requests to the right writing skill and configures bito quality gates — path-based lint rules, tokenizer backends, dialect enforcement, and MCP server setup. Use when asked to write docs, set up documentation tooling, configure quality gates, produce a README, or when the documentation type is ambiguous.
+allowed-tools: Read, Bash(bito *)
+license: MIT
 ---
 
 # Building in the Open
@@ -190,47 +192,24 @@ Set the backend via config (`tokenizer: claude`), env var (`BITO_TOKENIZER=opena
 
 Built-in completeness templates: `adr`, `handoff`, `design-doc`. Define custom templates in config.
 
-## Personas
+## Personas and Skill Mapping
 
-Every writing skill uses a persona to control voice. Personas are composable — the same artifact type always gets the same voice regardless of which agent writes it.
+Each persona is a voice guide in `../../personas/`. The same artifact type always gets the same voice.
 
-- **Technical Writer** (`../../personas/technical-writer.md`) — ADRs, design docs, changelogs
-- **Context Curator** (`../../personas/context-curator.md`) — Handoffs
-- **Doc Writer** (`../../personas/doc-writer.md`) — End-user docs
-- **Marketing Copywriter** (`../../personas/marketing-copywriter.md`) — READMEs, release announcements
+| Artifact | Skill | Persona | Persona file |
+|---|---|---|---|
+| Handoff | `curating-context` | Context Curator | `context-curator.md` |
+| ADR | `capturing-decisions` | Technical Writer | `technical-writer.md` |
+| Design doc | `writing-design-docs` | Technical Writer | `technical-writer.md` |
+| End-user doc | `writing-end-user-docs` | Doc Writer | `doc-writer.md` |
+| CHANGELOG entry | `writing-changelogs` | Technical Writer | `technical-writer.md` |
+| Release announcement | `writing-changelogs` | Marketing Copywriter | `marketing-copywriter.md` |
+| README (above the fold) | — | Marketing Copywriter | `marketing-copywriter.md` |
+| README (below the fold) | `writing-end-user-docs` | Doc Writer | `doc-writer.md` |
 
-## Composing Skills and Personas
+**Multi-persona artifacts:** The heading structure is the boundary. README transitions at `## Installation`. CHANGELOG + release announcement are handled natively by `writing-changelogs`. Rule of thumb: "attract or instruct?" Attract = Marketing Copywriter. Instruct = Doc Writer or Technical Writer.
 
-Most artifacts use a single skill and a single persona. A few require blending.
-
-### Single-persona artifacts
-
-| Artifact | Skill | Persona |
-|---|---|---|
-| Handoff | `curating-context` | Context Curator |
-| ADR | `capturing-decisions` | Technical Writer |
-| Design doc | `writing-design-docs` | Technical Writer |
-| End-user doc | `writing-end-user-docs` | Doc Writer |
-| CHANGELOG entry | `writing-changelogs` | Technical Writer |
-| Release announcement | `writing-changelogs` | Marketing Copywriter |
-
-### Multi-persona artifacts
-
-**README** — The above-the-fold sections (project pitch, value proposition, "why this exists") use the **Marketing Copywriter** persona. The below-the-fold sections (installation, quickstart, configuration, project structure) use the **Doc Writer** persona. The transition happens at the first `## Installation` or `## Getting Started` heading. Use `writing-end-user-docs` for the Doc Writer sections and `writing-changelogs` (release announcement mode) as voice reference for the Marketing Copywriter intro.
-
-**CHANGELOG + release announcement** — The `writing-changelogs` skill handles this natively. CHANGELOG entries get Technical Writer voice (factual, scannable). Release announcements get Marketing Copywriter voice (benefit-forward, enthusiastic but credible). Same changes, two voices, one skill invocation.
-
-### Skill chaining
-
-Skills often trigger each other:
-
-- **`writing-design-docs` → `capturing-decisions`** — Design docs surface discrete decisions. Step 4 of the design-docs skill prompts for ADR extraction.
-- **`curating-context` → `capturing-decisions`** — If decisions were made during the session, capture them as ADRs and reference them from the handoff.
-- **Any writing skill → `editorial-review`** — Every skill's final step runs the tone firewall. The editorial review is a quality layer, not a writing layer — it has no persona of its own.
-
-### When personas blend within a single document
-
-Keep voice transitions clean. Don't let the Marketing Copywriter voice leak into technical sections or the Technical Writer voice stiffen a getting-started guide. The heading structure is the boundary — each section commits to one persona's voice. If you're unsure which persona owns a section, ask: "Is this section trying to attract or instruct?" Attract = Marketing Copywriter. Instruct = Doc Writer or Technical Writer.
+**Skill chaining:** `writing-design-docs` → `capturing-decisions` (ADR extraction), `curating-context` → `capturing-decisions` (session decisions), any writing skill → `editorial-review` (tone firewall).
 
 ## Pre-commit Hook
 

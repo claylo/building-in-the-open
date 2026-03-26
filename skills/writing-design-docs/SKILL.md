@@ -1,6 +1,9 @@
 ---
 name: writing-design-docs
-description: Use when formalizing the output of a brainstorming session into a structured design document, before or during significant feature work, or when architectural decisions need narrative context beyond what individual ADRs provide.
+description: Creates structured design documents covering problem context, chosen approach, alternatives considered, and trade-off consequences — the narrative companion to atomic ADRs. Use when formalizing a brainstorming session, writing a design doc or technical spec, before significant feature work, or when architectural decisions need narrative context beyond individual ADRs.
+argument-hint: "[topic]"
+allowed-tools: Read, Bash(bito *)
+license: MIT
 ---
 
 # Writing Design Docs
