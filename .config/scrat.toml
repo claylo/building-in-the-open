@@ -1,0 +1,5 @@
+[project]
+type = "generic"    # bash project — version bump and publish are manual
+
+[commands]
+test = "no tests configured"
