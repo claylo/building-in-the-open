@@ -5,7 +5,7 @@
 type = "generic"    # bash project — version bump and publish are manual
 
 [commands]
-test = "no tests configured"
+# test = "no tests configured"
 
 [[version_files]]
 path = ".claude-plugin/plugin.json"
