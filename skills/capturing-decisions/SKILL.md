@@ -20,7 +20,7 @@ Primary reference: [Markdown Architectural Decision Records](https://adr.github.
 
 Injected at skill load time — use this to determine the next sequence number.
 
-!`ls ${user_config.doc_output_dir}/decisions/[0-9]*.md 2>/dev/null || ls record/decisions/[0-9]*.md 2>/dev/null || ls docs/decisions/[0-9]*.md 2>/dev/null || echo "(no existing ADRs found)"`
+!`ls "${CLAUDE_PLUGIN_OPTION_DOC_OUTPUT_DIR:-record}"/decisions/[0-9]*.md 2>/dev/null || ls docs/decisions/[0-9]*.md 2>/dev/null || echo "(no existing ADRs found)"`
 
 ## Repository layout and naming
 
