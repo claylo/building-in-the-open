@@ -56,6 +56,8 @@ The following is injected at skill load time — no tool calls needed.
 
 ## Process
 
+**NOTE:** Do not generate the filename date-time stamp until immediately prior to writing the file. Do not guess the date or time.
+
 ### Step 1: Gather context
 
 Use the session snapshot above as your starting point. Then review:
@@ -82,7 +84,9 @@ The mechanism matters less than the content. **Focus on what changes future beha
 - Design principles articulated that aren't obvious from code
 - Motivations, frustrations, hunches about project direction
 
-**Skip** technical implementation details already captured in code or commits.
+<IMPORTANT>
+**Skip** technical implementation details already captured in code or commits, or that are better-suited for a handoff document.
+</IMPORTANT>
 
 ### Step 3: Write the public handoff
 
