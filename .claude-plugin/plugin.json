@@ -1,14 +1,10 @@
 {
-  "name": "building-in-the-open",
-  "description": "Personas, skills, and quality gates for producing professional, self-contained development artifacts — from internal handoffs to end-user documentation",
-  "version": "1.1.0",
   "author": {
-    "name": "Clay Loveless",
-    "email": "clay@loveless.net"
+    "email": "clay@loveless.net",
+    "name": "Clay Loveless"
   },
+  "description": "Personas, skills, and quality gates for producing professional, self-contained development artifacts — from internal handoffs to end-user documentation",
   "homepage": "https://github.com/claylo/building-in-the-open",
-  "repository": "https://github.com/claylo/building-in-the-open",
-  "license": "MIT",
   "keywords": [
     "documentation",
     "personas",
@@ -18,30 +14,34 @@
     "tone-firewall",
     "building-in-the-open"
   ],
+  "license": "MIT",
+  "name": "building-in-the-open",
+  "repository": "https://github.com/claylo/building-in-the-open",
   "userConfig": {
-    "doc_output_dir": {
-      "title": "Doc output directory",
-      "description": "Directory for structured docs (ADRs, designs). Example: record, docs",
-      "type": "string",
-      "sensitive": false
-    },
     "dialect": {
-      "title": "English dialect",
       "description": "Dialect for spelling enforcement (en-us, en-gb, en-ca, en-au)",
-      "type": "string",
-      "sensitive": false
+      "sensitive": false,
+      "title": "English dialect",
+      "type": "string"
+    },
+    "doc_output_dir": {
+      "description": "Directory for structured docs (ADRs, designs). Example: record, docs",
+      "sensitive": false,
+      "title": "Doc output directory",
+      "type": "string"
     },
     "max_grade": {
-      "title": "Max reading level",
       "description": "Maximum Flesch-Kincaid grade (8=accessible, 10=moderate, 12=dense)",
-      "type": "string",
-      "sensitive": false
+      "sensitive": false,
+      "title": "Max reading level",
+      "type": "string"
     },
     "passive_max_percent": {
-      "title": "Max passive voice %",
       "description": "Maximum passive voice percentage (10=strict, 15=moderate, 25=relaxed)",
-      "type": "string",
-      "sensitive": false
+      "sensitive": false,
+      "title": "Max passive voice %",
+      "type": "string"
     }
-  }
+  },
+  "version": "1.2.0"
 }

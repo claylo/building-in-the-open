@@ -1,20 +1,20 @@
 {
-  "name": "building-in-the-open-dev",
   "description": "Development marketplace for building-in-the-open plugin",
+  "name": "building-in-the-open-dev",
   "owner": {
-    "name": "Clay Loveless",
-    "email": "clay@loveless.net"
+    "email": "clay@loveless.net",
+    "name": "Clay Loveless"
   },
   "plugins": [
     {
-      "name": "building-in-the-open",
-      "description": "Help coding agents produce clean development knowledge artifacts.",
-      "version": "1.0.1",
-      "source": "./",
       "author": {
-        "name": "Clay Loveless",
-        "email": "clay@loveless.net"
-      }
+        "email": "clay@loveless.net",
+        "name": "Clay Loveless"
+      },
+      "description": "Help coding agents produce clean development knowledge artifacts.",
+      "name": "building-in-the-open",
+      "source": "./",
+      "version": "1.2.0"
     }
   ]
 }
