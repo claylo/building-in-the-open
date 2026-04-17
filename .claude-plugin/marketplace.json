@@ -14,7 +14,7 @@
       "description": "Help coding agents produce clean development knowledge artifacts.",
       "name": "building-in-the-open",
       "source": "./",
-      "version": "1.2.1"
+      "version": "1.2.2"
     }
   ]
 }
