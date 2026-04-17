@@ -32,13 +32,7 @@ Load the **Doc Writer** persona from `${CLAUDE_PLUGIN_ROOT}/personas/doc-writer.
 
 **Dialect:** Check for `BITO_DIALECT` environment variable or the project's bito config for a dialect preference (en-us, en-gb, en-ca, en-au). If set, use that dialect's spelling conventions consistently throughout the draft. If not set, default to en-US.
 
-Key reminders:
-
-- Example first, explanation second
-- No "simply," "just," or "obviously"
-- Short paragraphs, scannable headers, generous whitespace
-- Define jargon on first use
-- Progressive disclosure — don't front-load edge cases
+The Doc Writer's defining principle: **example first, explanation second.** Every section leads with a runnable example; the prose is connective tissue.
 
 ### Step 3: Choose the document type
 
