@@ -1,7 +1,7 @@
 ---
 name: building-in-the-open
 description: Routes documentation requests to the right writing skill and configures bito quality gates — path-based lint rules, tokenizer backends, dialect enforcement, and MCP server setup. Use when asked to write docs, set up documentation tooling, configure quality gates, produce a README, or when the documentation type is ambiguous.
-allowed-tools: Read, Bash(bito *)
+allowed-tools: Read, Bash(bito *), Bash(bash ${CLAUDE_PLUGIN_ROOT}/skills/building-in-the-open/scripts/*)
 license: MIT
 ---
 
@@ -21,12 +21,12 @@ This is the entry point for the building-in-the-open plugin. If you know exactly
 | Write tutorials, guides, or API references for end users | `writing-end-user-docs` |
 | Produce CHANGELOG entries or release announcements | `writing-changelogs` |
 | Review an artifact before committing | `editorial-review` |
-| Set up quality gates for the first time | Automatic — `userConfig` prompts at plugin enable time, SessionStart hook scaffolds `.bito.yaml` |
+| Set up quality gates for the first time | Run `bash ${CLAUDE_PLUGIN_ROOT}/skills/building-in-the-open/scripts/scaffold-config.sh` to drop a `.bito.yaml` in the project root |
 | Configure or troubleshoot bito | Continue below |
 
 ## bito Setup
 
-bito provides the deterministic quality gates (token counting, readability scoring, completeness checking) that every writing skill depends on. The plugin works without it — skills still produce artifacts — but quality gates won't run without bito installed.
+The plugin's quality gates run through `bito`. Without it, skills still produce artifacts, but nothing is measured.
 
 ### Installation
 
@@ -37,6 +37,22 @@ npm install -g @claylo/bito   # wraps the native binary
 ```
 
 Verify: `bito doctor`
+
+### Scaffolding a config
+
+The plugin ships a template at `${CLAUDE_PLUGIN_ROOT}/defaults/bito.yaml` with rules pre-wired for handoffs, ADRs, designs, and general docs. Drop it into a project with:
+
+```sh
+bash ${CLAUDE_PLUGIN_ROOT}/skills/building-in-the-open/scripts/scaffold-config.sh
+```
+
+Behavior:
+
+- Exits cleanly if any `.bito.yaml` / `.bito.toml` / `.bito.json` (or `.bito-lint.*`) already exists. Pass `--force` to overwrite.
+- Writes to `.config/bito.yaml` if a `.config/` directory exists, otherwise `.bito.yaml` at the project root.
+- Fills template placeholders from env vars with sensible defaults: `DIALECT` (`en-us`), `DOC_OUTPUT_DIR` (`record`), `MAX_GRADE` (`12.0`), `PASSIVE_MAX_PERCENT` (`15.0`). The `CLAUDE_PLUGIN_OPTION_*` equivalents are also accepted.
+
+Edit the generated file afterwards — it's a starting point, not a permanent contract.
 
 ### Configuration file
 

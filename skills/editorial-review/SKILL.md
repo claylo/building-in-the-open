@@ -1,6 +1,6 @@
 ---
 name: editorial-review
-description: Runs deterministic quality gates (token count, readability, completeness via bito) and agent-based editorial judgment (conference-talk test, tone drift, assumed context) on documentation artifacts. Use before committing docs, when reviewing written artifacts for quality or tone, when checking if documentation is ready to ship, or as the final gate in any writing skill's workflow.
+description: Runs deterministic quality gates (token count, readability, completeness via bito) and agent-based editorial judgment (conference-talk test, tone drift, assumed context) on documentation artifacts. Use when asked to proofread, review, edit, or check writing quality; before committing docs; when checking if documentation is ready to ship or publish; or as the final gate in any writing skill's workflow.
 argument-hint: "[file-path]"
 context: fork
 agent: editorial-reviewer

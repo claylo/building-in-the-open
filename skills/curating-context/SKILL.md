@@ -1,6 +1,6 @@
 ---
 name: curating-context
-description: Produces a public handoff document (committed, tone-firewalled, token-budgeted) and captures private context for future sessions. Use when wrapping up a session, switching focus, handing off to another agent or person, saving progress before context is lost, or when someone says "let's write a handoff".
+description: Captures session decisions, open items, landmines, and current state into a public handoff document (committed, tone-firewalled, token-budgeted) so the next agent or person can pick up quickly. Use when wrapping up a session, switching focus, handing off to another agent or person, saving progress before context is lost, or when someone says "let's write a handoff".
 argument-hint: "[topic]"
 allowed-tools: Read, Bash(bito *)
 license: MIT
@@ -12,7 +12,7 @@ license: MIT
 
 ## Overview
 
-Capture session context into two outputs: a **public handoff** (committed to the repo, tone-firewalled, token-budgeted) and a **private memory file** (gitignored, unfiltered, full candor). The public handoff makes the next agent or human effective as fast as possible. The private memory preserves the full picture for future-you.
+Produce a **public handoff**: a committed, tone-firewalled, token-budgeted document that makes the next agent or human effective as fast as possible. This skill focuses exclusively on the handoff artifact — private note-taking happens in whatever journaling tool the user already has configured.
 
 ## When to Use
 
@@ -34,7 +34,6 @@ Capture session context into two outputs: a **public handoff** (committed to the
 | Output | Location | Committed? | Tone firewall? | Token target |
 |--------|----------|-----------|----------------|-------------|
 | Public handoff | `.handoffs/YYYY-MM-DD-HHMM-<topic>.md` | Yes | Yes | < 2,000 |
-| Private context | Journal tool, global rules location, or `PRIVATE_MEMORY.md` fallback | No | No | No limit |
 
 ## Session Snapshot
 
@@ -56,7 +55,9 @@ The following is injected at skill load time — no tool calls needed.
 
 ## Process
 
+<IMPORTANT>
 **NOTE:** Do not generate the filename date-time stamp until immediately prior to writing the file. Do not guess the date or time.
+</IMPORTANT>
 
 ### Step 1: Gather context
 
@@ -67,28 +68,9 @@ Use the session snapshot above as your starting point. Then review:
 - What should the next person do first?
 - What will surprise or confuse someone who hasn't been staring at this code?
 
-### Step 2: Capture private context
+Before drafting, dump unfiltered observations (frustrations, hunches, things that surprised you) into whatever private-capture tool you already use. This skill writes the handoff, not your journal — but the polished version is easier to write once the raw stuff is out of your head.
 
-Capture your unfiltered private context first — before writing the public handoff. Don't self-censor. This never reaches the repository.
-
-**Use whatever private capture mechanism is already configured in this session:**
-- If a `private-journal` MCP tool is available, use it (preferred — centralized, dated)
-- If the user's global rules specify a journal location, use that
-- If neither is available, write or append to `PRIVATE_MEMORY.md` in the project root
-  (gitignored by convention — ensure `.gitignore` includes it)
-
-The mechanism matters less than the content. **Focus on what changes future behavior:**
-- User corrections and pushback — what was said, why, what to do differently
-- Approaches that worked well — what clicked, what to repeat
-- Platform/tooling gotchas that burned real time
-- Design principles articulated that aren't obvious from code
-- Motivations, frustrations, hunches about project direction
-
-<IMPORTANT>
-**Skip** technical implementation details already captured in code or commits, or that are better-suited for a handoff document.
-</IMPORTANT>
-
-### Step 3: Write the public handoff
+### Step 2: Write the public handoff
 
 Load the **Context Curator** persona from `${CLAUDE_PLUGIN_ROOT}/personas/context-curator.md` (public mode).
 
@@ -101,7 +83,7 @@ Use the handoff template from `${CLAUDE_PLUGIN_ROOT}/templates/handoff.md`. Fill
 3. **What's next** — Prioritized, actionable, with `file:line` pointers where helpful.
 4. **Landmines** — Specific things that will bite the next reader.
 
-### Step 4: Check quality
+### Step 3: Check quality
 
 Before saving the public handoff, verify:
 
@@ -111,7 +93,7 @@ Before saving the public handoff, verify:
 - [ ] **Landmines section populated?** If empty, think harder. What will confuse someone who wasn't here?
 - [ ] **State color honest?** Green/Yellow/Red reflects reality, not optimism.
 
-### Step 5: Tone firewall (public handoff only)
+### Step 4: Tone firewall
 
 If the `editorial-review` skill or agent is available, run the public handoff through it. If not, self-check against the conference-talk test: would every sentence in this document be comfortable to say aloud at a technical deep-dive conference?
 
@@ -132,8 +114,6 @@ Specifically check for:
 
 | Mistake | Fix |
 |---------|-----|
-| Writing the public handoff first and forgetting private context | Always capture private context first — use whatever mechanism is configured (journal tool, global rules location, or PRIVATE_MEMORY.md fallback) |
-| Logging implementation details in private context | Focus on what changes future behavior: corrections, wins, gotchas, design principles. The code already has the technical details. |
 | Vague next steps ("continue working on the feature") | Be specific: what file, what function, what's the first concrete action? |
 | Empty landmines section | If you can't name a landmine, you haven't thought about what will surprise the next reader |
 | Exceeding the token budget with narrative prose | Use the template structure. Bullets over paragraphs. Link to ADRs for rationale instead of inlining it. |

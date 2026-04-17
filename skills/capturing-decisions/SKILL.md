@@ -58,11 +58,11 @@ Maintain an index at `{PROJECT_ROOT}/${user_config.doc_output_dir}/decisions/REA
 
 Use this mapping:
 
-- proposed
-- accepted
-- rejected
-- deprecated
-- superseded
+- 🟡 proposed
+- ✅ accepted
+- ❌ rejected
+- ⚠️ deprecated
+- 🔁 superseded
 
 ## Process
 
